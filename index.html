@@ -408,8 +408,50 @@
 
 <script>
   (function initRealFlower() {
-    const flowerContainer = document.getElementById("luxuryFlower");
-    if (!flowerContainer) return;
+    // 🌹 REALISTIC FLOWER GENERATOR (layered + organic)
+const layers = [
+  { count: 6, radius: 10, scale: 0.6, delay: 0 },     // inner
+  { count: 8, radius: 18, scale: 0.8, delay: 0.2 },   // mid
+  { count: 10, radius: 26, scale: 1, delay: 0.4 }     // outer
+];
+
+let petalIndex = 0;
+
+layers.forEach((layer, layerIndex) => {
+  for (let i = 0; i < layer.count; i++) {
+
+    const petal = document.createElement("div");
+    petal.className = "petal";
+
+    // 🌪 NOT perfect angle (adds realism)
+    const baseAngle = (360 / layer.count) * i;
+    const randomOffset = (Math.random() - 0.5) * 15;
+    const angle = baseAngle + randomOffset + (layerIndex * 10);
+
+    petal.style.setProperty('--angle', angle + 'deg');
+
+    // 📏 radial positioning (NOT same center)
+    const radius = layer.radius + (Math.random() * 4);
+
+    petal.style.top = `calc(50% - ${radius}px)`;
+    petal.style.left = `calc(50% - ${radius}px)`;
+
+    // 🌸 scale per layer (depth)
+    petal.style.transform = `scale(${layer.scale})`;
+
+    // ⏱ stagger bloom (layered opening)
+    const delay = (petalIndex * 0.08) + layer.delay;
+    petal.style.animationDelay = delay + "s";
+
+    // 🌿 slight organic variation
+    if (Math.random() > 0.7) {
+      petal.style.filter = "brightness(1.1)";
+    }
+
+    flowerContainer.appendChild(petal);
+    petalIndex++;
+  }
+});
     
     // create petals with realistic bloom animation
     const petalCount = 16;
