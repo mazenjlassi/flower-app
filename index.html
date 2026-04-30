@@ -115,7 +115,7 @@
       height: 100%;
     }
 
-    /* ✿ NEW PETAL STYLE — elegant, soft, organic, no heavy circle overload */
+    /* REAL FLOWER ANIMATION - petals bloom organically like a time-lapse */
     .petal {
       position: absolute;
       width: 48%;
@@ -133,7 +133,8 @@
         inset 0 1px 6px rgba(255, 245, 210, 0.5),
         0 0 12px rgba(255, 90, 120, 0.4);
       transition: filter 0.2s;
-      animation: petalBloom 0.9s cubic-bezier(0.2, 0.85, 0.3, 1.2) forwards;
+      /* REALISTIC BLOOM: starts curled, slowly opens and rotates into final position */
+      animation: realBloom 2.2s cubic-bezier(0.2, 0.85, 0.25, 1.1) forwards;
       will-change: transform, opacity;
     }
     
@@ -147,21 +148,38 @@
       height: 53%;
     }
     
-    @keyframes petalBloom {
+    /* REAL FLOWER BLOOM KEYFRAMES - starts closed/bud-like, expands outward */
+    @keyframes realBloom {
       0% {
-        transform: scale(0) rotate(-6deg);
+        transform: scale(0.15) rotate(calc(var(--angle) - 35deg));
         opacity: 0;
-        filter: blur(10px);
+        filter: blur(12px);
+        border-radius: 80% 20% 80% 20% / 50% 50% 50% 50%;
       }
-      40% { filter: blur(2px); }
+      25% {
+        opacity: 0.4;
+        filter: blur(6px);
+        transform: scale(0.4) rotate(calc(var(--angle) - 20deg));
+      }
+      50% {
+        opacity: 0.7;
+        filter: blur(3px);
+        transform: scale(0.7) rotate(calc(var(--angle) - 10deg));
+        border-radius: 75% 25% 70% 30% / 55% 45% 55% 45%;
+      }
+      75% {
+        transform: scale(0.9) rotate(calc(var(--angle) - 3deg));
+        filter: blur(1px);
+      }
       100% {
         transform: scale(1) rotate(var(--angle));
         opacity: 1;
         filter: blur(0);
+        border-radius: inherit;
       }
     }
 
-    /* ✦ NEW CENTER — delicate star-burst / gem, no clunky circle overload */
+    /* ✦ STARLIGHT CORE — delicate star-burst / gem */
     .starlight-core {
       position: absolute;
       width: 28%;
@@ -176,7 +194,7 @@
         #C45D18);
       border-radius: 40% 60% 45% 55% / 55% 40% 60% 45%;
       box-shadow: 0 0 28px rgba(255, 190, 70, 0.9), 0 0 38px rgba(255, 130, 50, 0.5), inset 0 2px 10px rgba(255, 245, 180, 0.8);
-      animation: gentleSpin 6s infinite alternate, softPulseGlow 2.6s ease-in-out infinite;
+      animation: centerReveal 2s ease-out forwards, gentleSpin 6s infinite alternate, softPulseGlow 2.6s ease-in-out infinite;
       cursor: pointer;
       transition: 0.2s;
       display: flex;
@@ -184,6 +202,24 @@
       justify-content: center;
       font-size: clamp(18px, 8vw, 32px);
       backdrop-filter: blur(1px);
+      transform: scale(0);
+      opacity: 0;
+    }
+    
+    /* center reveals after petals start opening */
+    @keyframes centerReveal {
+      0% {
+        transform: scale(0) rotate(-15deg);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(0.6) rotate(2deg);
+        opacity: 0.6;
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
     }
     
     /* inner spark ✨ */
@@ -235,7 +271,13 @@
       margin-top: 26px;
       z-index: 12;
       width: 100%;
+      animation: messageFadeIn 1.8s ease-out forwards;
     }
+    @keyframes messageFadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
     .hey-big {
       font-size: clamp(2.4rem, 10vw, 3.5rem);
       font-weight: 800;
@@ -325,11 +367,27 @@
       z-index: 12;
       font-weight: 300;
       letter-spacing: 1px;
+      animation: fadeSlideUp 2s ease-out forwards;
+    }
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
     
     /* no awkward outlines on touch */
     :focus {
       outline: none;
+    }
+    
+    /* additional floating petal animation for realism - subtle sway after bloom */
+    @keyframes subtleSway {
+      0%, 100% { transform: rotate(var(--angle)) translateY(0px); }
+      50% { transform: rotate(calc(var(--angle) + 0.8deg)) translateY(-1.5px); }
+    }
+    
+    .flower.bloom-complete .petal {
+      animation: realBloom 2.2s cubic-bezier(0.2, 0.85, 0.25, 1.1) forwards, subtleSway 4s ease-in-out infinite;
+      animation-delay: 0s, 2.3s;
     }
   </style>
 </head>
@@ -349,14 +407,12 @@
 </div>
 
 <script>
-  (function initModernFlower() {
+  (function initRealFlower() {
     const flowerContainer = document.getElementById("luxuryFlower");
     if (!flowerContainer) return;
     
-    // fresh petal logic — looks more like a real flower, no boring circles
+    // create petals with realistic bloom animation
     const petalCount = 16;
-    const offsetTop = "24%";
-    const offsetLeft = "24%";
     
     for (let i = 0; i < petalCount; i++) {
       const petal = document.createElement("div");
@@ -366,15 +422,16 @@
       const angle = angleStep * i;
       petal.style.setProperty('--angle', angle + 'deg');
       
-      // positioning: all petals radiate from center (relative to flower)
+      // positioning: all petals radiate from center
       petal.style.top = "24%";
       petal.style.left = "24%";
       
-      // organic delay – bloom cascade
-      const delay = i * 0.065;
+      // staggered bloom timing for realistic sequential opening (like a real flower unfurling)
+      // petals bloom in order, creating a wave effect
+      const delay = i * 0.095;
       petal.style.animationDelay = delay + "s";
       
-      // some petals get extra gentle variation
+      // some petals get extra gentle variation for organic look
       if (i % 5 === 2) {
         petal.style.width = "49%";
         petal.style.height = "53%";
@@ -386,11 +443,17 @@
       flowerContainer.appendChild(petal);
     }
     
-    // create gorgeous starlight core (no boring circle!)
+    // create gorgeous starlight core with delayed reveal (like a flower's center emerging)
     const starCore = document.createElement("div");
     starCore.className = "starlight-core";
-    starCore.innerHTML = "🌸";   // cute cherry blossom inside
+    starCore.innerHTML = "🌸";
+    starCore.style.animationDelay = "0.8s"; // center appears after petals start opening
     flowerContainer.appendChild(starCore);
+    
+    // mark flower as bloom-complete after main animation finishes to add subtle sway
+    setTimeout(() => {
+      flowerContainer.classList.add('bloom-complete');
+    }, 2400);
     
     // === INTERACTIVITY : tap on core gives "heey" magic ===
     starCore.addEventListener("click", (e) => {
@@ -441,6 +504,18 @@
       createRippleTouch(clickX, clickY, "#FFCBA5");
       softPetalShower(clickX, clickY);
     });
+    
+    // ADDITIONAL REALISM: create a few inner petals that appear slightly later (optional)
+    // this gives the feeling of a multi-layered flower opening
+    setTimeout(() => {
+      const innerPetals = [3, 8, 12];
+      innerPetals.forEach(idx => {
+        const existingPetals = document.querySelectorAll('.petal');
+        if (existingPetals[idx]) {
+          existingPetals[idx].style.filter = "brightness(1.08) drop-shadow(0 0 4px #FFC0CB)";
+        }
+      });
+    }, 1000);
     
   })();
   
@@ -670,7 +745,7 @@
   `;
   document.head.appendChild(styleFloat);
   
-  // random petal shimmer periodically
+  // random petal shimmer periodically (after bloom)
   setInterval(() => {
     const petals = document.querySelectorAll('.petal');
     if (!petals.length) return;
@@ -685,7 +760,7 @@
   
   window.addEventListener('load', () => {
     initDustField();
-    // welcome touch: tiny heey greeting pop after load
+    // welcome touch: tiny heey greeting pop after load, once flower has started blooming
     setTimeout(() => {
       const core = document.querySelector('.starlight-core');
       if (core) {
@@ -694,7 +769,7 @@
         const y = rect.top + rect.height/2;
         floatingHeeyText(x, y);
       }
-    }, 500);
+    }, 1200);
   });
 </script>
 </body>
