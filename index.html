@@ -2,155 +2,158 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>heey | sweet bloom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>heey · MONTAAAA sweet flower</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       min-height: 100vh;
-      background: radial-gradient(ellipse at 40% 50%, #1F1224, #0B0710);
+      background: linear-gradient(145deg, #1a0c17 0%, #0a0512 100%);
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: 'Segoe UI', 'Poppins', 'Quicksand', system-ui, -apple-system, 'Inter', sans-serif;
-      overflow: hidden;
-      cursor: default;
+      overflow-x: hidden;
+      overflow-y: auto;
       position: relative;
+      padding: 20px;
     }
 
-    /* dreamy animated soft glow orbs */
-    .ambient-light {
+    /* soft floating glow */
+    .glow-mist {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
     }
-    .ambient-light::before,
-    .ambient-light::after {
+    .glow-mist::before,
+    .glow-mist::after {
       content: '';
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 25% 35%, rgba(255, 160, 190, 0.2) 0%, transparent 55%),
-                  radial-gradient(circle at 75% 70%, rgba(255, 210, 150, 0.18) 0%, transparent 60%);
-      animation: slowDrift 18s infinite alternate ease-in-out;
+      background: radial-gradient(circle at 30% 40%, rgba(255, 160, 180, 0.2) 0%, transparent 55%),
+                  radial-gradient(circle at 75% 65%, rgba(255, 210, 150, 0.18) 0%, transparent 60%);
+      animation: breatheSoft 16s infinite alternate ease-in-out;
     }
-    .ambient-light::after {
-      background: radial-gradient(circle at 60% 30%, rgba(210, 130, 200, 0.15) 0%, transparent 65%);
-      animation: slowDrift 22s infinite alternate-reverse;
+    .glow-mist::after {
+      background: radial-gradient(circle at 65% 25%, rgba(230, 140, 190, 0.12) 0%, transparent 65%);
+      animation: breatheSoft 20s infinite alternate-reverse;
     }
-    @keyframes slowDrift {
+    @keyframes breatheSoft {
       0% { opacity: 0.4; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1.08); }
+      100% { opacity: 1; transform: scale(1.06); }
     }
 
-    /* floating sparkle dust */
-    .dust-field {
+    /* floating tiny particles (mobile friendly perf) */
+    .dust-sky {
       position: fixed;
       width: 100%;
       height: 100%;
       pointer-events: none;
       z-index: 1;
     }
-    .dust-particle {
+    .dustie {
       position: absolute;
-      background: radial-gradient(circle, #FFDDC0, #FFA5B0);
+      background: radial-gradient(circle, #FFDDC5, #FFB0BE);
       border-radius: 50%;
-      animation: floatParticle linear infinite;
+      animation: floatUpSlow linear infinite;
       opacity: 0;
-      filter: blur(0.4px);
     }
-    @keyframes floatParticle {
+    @keyframes floatUpSlow {
       0% {
-        transform: translateY(100vh) rotate(0deg);
+        transform: translateY(100vh) scale(0);
         opacity: 0;
       }
-      15% { opacity: 0.5; }
-      85% { opacity: 0.4; }
+      20% { opacity: 0.5; }
+      80% { opacity: 0.35; }
       100% {
-        transform: translateY(-25vh) rotate(180deg);
+        transform: translateY(-20vh) scale(1);
         opacity: 0;
       }
     }
 
-    /* main card container */
-    .card {
+    /* main content */
+    .sweet-container {
       position: relative;
       z-index: 20;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(1px);
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
     }
 
-    /* flower wrapper with gentle lift */
-    .flower-garden {
+    /* flower holder */
+    .flower-stage {
       position: relative;
-      width: 320px;
-      height: 320px;
+      width: 86vw;
+      max-width: 320px;
+      height: 86vw;
+      max-height: 320px;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
       align-items: center;
-      transition: transform 0.35s cubic-bezier(0.2, 0.85, 0.4, 1.1);
-      filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.4));
+      transition: transform 0.25s ease;
     }
-    .flower-garden:hover {
-      transform: scale(1.01);
+    .flower-stage:active {
+      transform: scale(0.99);
     }
 
-    /* flower container */
     .flower {
       position: relative;
-      width: 270px;
-      height: 270px;
+      width: 100%;
+      height: 100%;
     }
 
-    /* new PETAL STYLE: softer, candy-like, warmer */
+    /* ✿ NEW PETAL STYLE — elegant, soft, organic, no heavy circle overload */
     .petal {
       position: absolute;
-      width: 125px;
-      height: 135px;
-      border-radius: 72% 28% 65% 35% / 58% 45% 55% 42%;
+      width: 48%;
+      height: 52%;
+      border-radius: 75% 25% 65% 35% / 60% 45% 55% 40%;
       transform-origin: bottom right;
       opacity: 0;
-      background: radial-gradient(ellipse at 32% 28%, 
+      background: radial-gradient(ellipse at 32% 30%, 
         #FFB7C5, 
-        #FF8AAE 35%,
-        #E9547A 70%,
-        #B32D55);
+        #FF88AE 40%,
+        #E64B74 75%,
+        #B2224A);
       box-shadow: 
-        0 10px 18px rgba(0, 0, 0, 0.25),
-        inset 0 1px 8px rgba(255, 245, 210, 0.6),
-        0 0 16px rgba(255, 110, 140, 0.5);
-      transition: all 0.2s ease;
-      animation: bloomSweet 0.95s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+        0 8px 18px rgba(0, 0, 0, 0.2),
+        inset 0 1px 6px rgba(255, 245, 210, 0.5),
+        0 0 12px rgba(255, 90, 120, 0.4);
+      transition: filter 0.2s;
+      animation: petalBloom 0.9s cubic-bezier(0.2, 0.85, 0.3, 1.2) forwards;
+      will-change: transform, opacity;
     }
     
-    /* variation for organic charm */
-    .petal:nth-child(3n+1) {
-      border-radius: 60% 40% 68% 32% / 52% 48% 52% 48%;
+    /* organic variation */
+    .petal:nth-child(odd) {
+      border-radius: 68% 32% 72% 28% / 55% 48% 52% 45%;
     }
-    .petal:nth-child(3n+2) {
-      border-radius: 68% 32% 58% 42% / 48% 54% 46% 52%;
+    .petal:nth-child(3n) {
+      background: radial-gradient(ellipse at 35% 30%, #FFC0CF, #FF779F, #D63E6A);
+      width: 47%;
+      height: 53%;
     }
-    .petal:nth-child(5n) {
-      background: radial-gradient(ellipse at 30% 35%, #FFC0D0, #FF779F, #D63E6A);
-    }
-
-    @keyframes bloomSweet {
+    
+    @keyframes petalBloom {
       0% {
-        transform: scale(0) rotate(-8deg);
+        transform: scale(0) rotate(-6deg);
         opacity: 0;
-        filter: blur(12px);
+        filter: blur(10px);
       }
-      35% { filter: blur(3px); }
+      40% { filter: blur(2px); }
       100% {
         transform: scale(1) rotate(var(--angle));
         opacity: 1;
@@ -158,187 +161,203 @@
       }
     }
 
-    /* center: glowing honey-gold with a cute wink */
-    .heart-center {
+    /* ✦ NEW CENTER — delicate star-burst / gem, no clunky circle overload */
+    .starlight-core {
       position: absolute;
-      width: 82px;
-      height: 82px;
-      top: 94px;
-      left: 94px;
-      border-radius: 50%;
-      z-index: 18;
-      background: radial-gradient(circle at 35% 30%, 
-        #FFE3A4, 
-        #FDBC5A 25%,
-        #E58E2E 70%,
-        #C2691A);
-      box-shadow: 0 0 34px rgba(255, 190, 80, 0.9), 0 0 48px rgba(255, 140, 50, 0.5), inset 0 2px 8px rgba(255, 245, 190, 0.8);
-      animation: softHeartbeat 2.8s ease-in-out infinite;
+      width: 28%;
+      height: 28%;
+      top: 36%;
+      left: 36%;
+      z-index: 22;
+      background: radial-gradient(circle at 35% 35%, 
+        #FFECB3, 
+        #FDBC5A 30%,
+        #E5892A 75%,
+        #C45D18);
+      border-radius: 40% 60% 45% 55% / 55% 40% 60% 45%;
+      box-shadow: 0 0 28px rgba(255, 190, 70, 0.9), 0 0 38px rgba(255, 130, 50, 0.5), inset 0 2px 10px rgba(255, 245, 180, 0.8);
+      animation: gentleSpin 6s infinite alternate, softPulseGlow 2.6s ease-in-out infinite;
       cursor: pointer;
       transition: 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 34px;
-      font-weight: 400;
-      color: rgba(255, 240, 150, 0.9);
-      text-shadow: 0 0 3px #FFB347;
-    }
-    .heart-center:hover {
-      transform: scale(1.04);
-      box-shadow: 0 0 48px #FFCF8A;
+      font-size: clamp(18px, 8vw, 32px);
+      backdrop-filter: blur(1px);
     }
     
-    /* little heart emoji spark */
-    .heart-center::after {
-      content: "💖";
+    /* inner spark ✨ */
+    .starlight-core::before {
+      content: "✨";
       position: absolute;
-      font-size: 22px;
-      top: -18px;
-      right: -12px;
-      opacity: 0.7;
-      filter: drop-shadow(0 0 4px #FFA07A);
-      animation: floatingHeart 2.2s infinite alternate;
+      font-size: 18px;
+      top: -15%;
+      right: -12%;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 4px gold);
+      animation: littleSpark 2s infinite alternate;
       pointer-events: none;
     }
     
-    @keyframes softHeartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04); box-shadow: 0 0 44px rgba(255, 190, 90, 1); }
+    .starlight-core::after {
+      content: "💫";
+      position: absolute;
+      font-size: 14px;
+      bottom: -18%;
+      left: -10%;
+      opacity: 0.8;
+      animation: littleSparkRev 2.4s infinite alternate;
+      pointer-events: none;
     }
     
-    @keyframes floatingHeart {
+    @keyframes gentleSpin {
+      0% { transform: rotate(0deg) scale(1); border-radius: 40% 60% 45% 55% / 55% 40% 60% 45%; }
+      100% { transform: rotate(8deg) scale(1.02); border-radius: 50% 50% 45% 55% / 50% 45% 55% 50%; }
+    }
+    
+    @keyframes softPulseGlow {
+      0%, 100% { box-shadow: 0 0 20px #FFC285, 0 0 30px rgba(255, 150, 60, 0.6); }
+      50% { box-shadow: 0 0 38px #FFDA90, 0 0 48px #FFB347; }
+    }
+    
+    @keyframes littleSpark {
       0% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-      100% { transform: translateY(-5px) rotate(5deg); opacity: 1; }
+      100% { transform: translateY(-5px) rotate(10deg); opacity: 1; }
+    }
+    @keyframes littleSparkRev {
+      0% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      100% { transform: translateY(4px) rotate(-8deg); opacity: 1; }
     }
 
-    /* Text area — friendly and sweet */
-    .greeting {
+    /* heey text — super friendly and prominent */
+    .hey-message {
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 26px;
       z-index: 12;
+      width: 100%;
     }
     .hey-big {
-      font-size: 3.2rem;
-      font-weight: 700;
+      font-size: clamp(2.4rem, 10vw, 3.5rem);
+      font-weight: 800;
       font-family: 'Segoe UI', 'Poppins', 'Quicksand', cursive;
-      background: linear-gradient(125deg, #FFDAC6, #FFB7C5, #FFD3A5);
+      background: linear-gradient(125deg, #FFE0C0, #FFB0C0, #FFD3A5);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       letter-spacing: 3px;
-      text-shadow: 0 0 16px rgba(255, 160, 130, 0.6);
-      animation: greetingGlow 2.2s infinite alternate;
+      text-shadow: 0 0 18px rgba(255, 140, 110, 0.5);
+      animation: textPop 2s infinite alternate;
       display: inline-block;
-      backdrop-filter: blur(3px);
-      padding: 0 12px;
-      border-radius: 60px;
+      padding: 0 6px;
     }
-    .sweet-tag {
-      font-size: 0.85rem;
+    .sweet-sub {
+      font-size: 0.8rem;
       font-weight: 400;
-      color: #FFCFBB;
+      color: #FFD9C4;
       margin-top: 8px;
       letter-spacing: 2px;
-      background: rgba(25, 12, 22, 0.4);
+      background: rgba(20, 8, 18, 0.4);
+      backdrop-filter: blur(6px);
       display: inline-block;
-      padding: 6px 16px;
+      padding: 6px 18px;
       border-radius: 60px;
-      backdrop-filter: blur(5px);
     }
     
-    @keyframes greetingGlow {
-      0% { text-shadow: 0 0 4px rgba(255, 180, 140, 0.4); opacity: 0.95; }
-      100% { text-shadow: 0 0 18px rgba(255, 170, 120, 0.9); opacity: 1; }
+    @keyframes textPop {
+      0% { text-shadow: 0 0 4px rgba(255, 170, 130, 0.5); letter-spacing: 2px; }
+      100% { text-shadow: 0 0 18px rgba(255, 150, 100, 0.9); letter-spacing: 3px; }
     }
-
-    /* ripple & interactive fx */
-    .ripple-effect {
-      position: absolute;
+    
+    /* interactive ripples (soft, mobile optimized) */
+    .touch-ripple {
+      position: fixed;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 205, 130, 0.7) 0%, rgba(255, 130, 100, 0) 70%);
+      background: radial-gradient(circle, rgba(255, 200, 140, 0.6) 0%, rgba(255, 120, 90, 0) 70%);
       transform: scale(0);
-      animation: rippleOut 0.7s ease-out forwards;
+      animation: rippleFade 0.65s ease-out forwards;
       pointer-events: none;
       z-index: 200;
     }
-    @keyframes rippleOut {
-      0% { transform: scale(0); opacity: 0.8; }
-      100% { transform: scale(4.5); opacity: 0; }
+    @keyframes rippleFade {
+      0% { transform: scale(0); opacity: 0.7; }
+      100% { transform: scale(3.5); opacity: 0; }
     }
     
-    /* cute micro petal bursts */
-    .micro-petal {
+    /* mini petal burst */
+    .micro-bloom {
       position: fixed;
       pointer-events: none;
       z-index: 180;
-      filter: blur(0.6px);
+      filter: blur(0.4px);
     }
     
-    /* responsiveness */
+    /* mobile first adjustments */
     @media (max-width: 550px) {
-      .flower {
-        width: 230px;
-        height: 230px;
+      body {
+        padding: 12px;
       }
-      .heart-center {
-        width: 70px;
-        height: 70px;
-        top: 80px;
-        left: 80px;
-        font-size: 28px;
+      .flower-stage {
+        width: 82vw;
+        max-width: 300px;
+        height: 82vw;
+        max-height: 300px;
       }
-      .petal {
-        width: 108px;
-        height: 116px;
-      }
-      .flower-garden {
-        width: 270px;
-        height: 270px;
+      .starlight-core {
+        font-size: 24px;
       }
       .hey-big {
-        font-size: 2.6rem;
+        letter-spacing: 2px;
+      }
+      .sweet-sub {
+        font-size: 0.7rem;
       }
     }
     
-    /* extra sweetness: small signature */
-    .tiny-note {
+    /* extra little love note */
+    .tiny-grace {
       position: absolute;
-      bottom: 18px;
+      bottom: 12px;
       left: 0;
       right: 0;
       text-align: center;
-      font-size: 9px;
-      letter-spacing: 1.5px;
-      color: rgba(255, 190, 170, 0.5);
+      font-size: 8px;
+      color: rgba(255, 190, 160, 0.5);
       z-index: 12;
-      font-style: normal;
       font-weight: 300;
+      letter-spacing: 1px;
+    }
+    
+    /* no awkward outlines on touch */
+    :focus {
+      outline: none;
     }
   </style>
 </head>
 <body>
-<div class="ambient-light"></div>
-<div class="dust-field" id="dustField"></div>
+<div class="glow-mist"></div>
+<div class="dust-sky" id="dustField"></div>
 
-<div class="card">
-  <div class="flower-garden">
-    <div class="flower" id="sweetFlower"></div>
+<div class="sweet-container">
+  <div class="flower-stage">
+    <div class="flower" id="luxuryFlower"></div>
   </div>
-  <div class="greeting">
-    <div class="hey-big">heey ✿</div>
-    <div class="sweet-tag">you make everything bloom</div>
+  <div class="hey-message">
+    <div class="hey-big">heey 🌸</div>
+    <div class="sweet-sub">you make everything bloom</div>
   </div>
-  <div class="tiny-note">✦ touch the center for magic ✦</div>
+  <div class="tiny-grace">✦ tap the flower center ✦</div>
 </div>
 
 <script>
-  (function initSweetFlower() {
-    const flowerContainer = document.getElementById("sweetFlower");
+  (function initModernFlower() {
+    const flowerContainer = document.getElementById("luxuryFlower");
     if (!flowerContainer) return;
     
-    const petalCount = 16;    // full & lush
-    // new style: each petal has unique rotation
+    // fresh petal logic — looks more like a real flower, no boring circles
+    const petalCount = 16;
+    const offsetTop = "24%";
+    const offsetLeft = "24%";
+    
     for (let i = 0; i < petalCount; i++) {
       const petal = document.createElement("div");
       petal.className = "petal";
@@ -346,306 +365,336 @@
       const angleStep = 360 / petalCount;
       const angle = angleStep * i;
       petal.style.setProperty('--angle', angle + 'deg');
-      petal.style.top = "68px";
-      petal.style.left = "68px";
       
-      // staggered blooming (playful sequence)
-      const delay = i * 0.07;
+      // positioning: all petals radiate from center (relative to flower)
+      petal.style.top = "24%";
+      petal.style.left = "24%";
+      
+      // organic delay – bloom cascade
+      const delay = i * 0.065;
       petal.style.animationDelay = delay + "s";
       
-      // extra flavor: some petals get additional size variation (organic)
-      if (i % 4 === 2) {
-        petal.style.width = "130px";
-        petal.style.height = "138px";
+      // some petals get extra gentle variation
+      if (i % 5 === 2) {
+        petal.style.width = "49%";
+        petal.style.height = "53%";
       }
       if (i % 7 === 3) {
-        petal.style.filter = "brightness(1.07) saturate(1.05)";
+        petal.style.background = `radial-gradient(ellipse at 30% 30%, #FFBFCB, #FF7AA5, #D9426C)`;
       }
       
       flowerContainer.appendChild(petal);
     }
     
-    // create the center with "heey" vibe!
-    const centerElement = document.createElement("div");
-    centerElement.className = "heart-center";
-    centerElement.innerHTML = "🌸";   // cherry blossom charm
-    flowerContainer.appendChild(centerElement);
+    // create gorgeous starlight core (no boring circle!)
+    const starCore = document.createElement("div");
+    starCore.className = "starlight-core";
+    starCore.innerHTML = "🌸";   // cute cherry blossom inside
+    flowerContainer.appendChild(starCore);
     
-    // interactive: click center -> "heey" whisper + sparkle festival
-    centerElement.addEventListener("click", (e) => {
+    // === INTERACTIVITY : tap on core gives "heey" magic ===
+    starCore.addEventListener("click", (e) => {
       e.stopPropagation();
-      const rect = centerElement.getBoundingClientRect();
+      const rect = starCore.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      // magical ripple & bursts
-      createRippleWave(centerX, centerY, "#FFCC99");
-      launchConfettiHearts(centerX, centerY);
-      createSweetWordPopup(centerX, centerY);
+      // visual & emotional feedback
+      createRippleTouch(centerX, centerY, "#FFCFA5");
+      burstHeartsAndStars(centerX, centerY);
+      floatingHeeyText(centerX, centerY);
       
-      // animated bounce on center + make "heey" greeting dance
-      centerElement.style.transform = "scale(0.96)";
-      setTimeout(() => { centerElement.style.transform = ""; }, 150);
-      
-      const heyElement = document.querySelector(".hey-big");
-      heyElement.style.animation = "none";
-      heyElement.style.transform = "scale(1.1)";
-      heyElement.style.transition = "0.2s";
+      // animate the core for playful response
+      starCore.style.transform = "scale(0.94) rotate(2deg)";
       setTimeout(() => {
-        heyElement.style.animation = "greetingGlow 2.2s infinite alternate";
-        heyElement.style.transform = "";
-      }, 250);
+        starCore.style.transform = "";
+      }, 150);
       
-      // flash extra message
-      const tagline = document.querySelector(".sweet-tag");
-      const originalText = tagline.innerText;
-      tagline.innerText = "💕 heey gorgeous 💕";
-      tagline.style.opacity = "0.9";
+      // animate "heey" text with extra sweetness
+      const heyBig = document.querySelector(".hey-big");
+      heyBig.style.animation = "none";
+      heyBig.style.transform = "scale(1.1)";
       setTimeout(() => {
-        tagline.innerText = originalText;
-      }, 1300);
+        heyBig.style.animation = "textPop 2s infinite alternate";
+        heyBig.style.transform = "";
+      }, 220);
+      
+      // subtle subtext change
+      const subElem = document.querySelector(".sweet-sub");
+      const originalSub = subElem.innerText;
+      subElem.innerText = "💕  heey gorgeous  💕";
+      subElem.style.opacity = "0.95";
+      setTimeout(() => {
+        subElem.innerText = originalSub;
+      }, 1200);
+      
+      // extra fun: trigger a tiny confetti of petals
+      miniPetalSprinkle(centerX, centerY);
     });
     
-    // also click on flower wrapper yields tiny petals effect
-    const wrapper = document.querySelector(".flower-garden");
+    // also clicking flower wrapper (but not center twice) gives subtle delight
+    const wrapper = document.querySelector(".flower-stage");
     wrapper.addEventListener("click", (e) => {
-      if (e.target === centerElement || centerElement.contains(e.target)) return;
+      if (e.target === starCore || starCore.contains(e.target)) return;
       const clickX = e.clientX;
       const clickY = e.clientY;
-      createRippleWave(clickX, clickY, "#FFC8A2");
-      sendMiniPetalShower(clickX, clickY);
+      createRippleTouch(clickX, clickY, "#FFCBA5");
+      softPetalShower(clickX, clickY);
     });
     
   })();
   
-  // ripple effect (refined)
-  function createRippleWave(x, y, color = "#FFD0A0") {
-    const ripple = document.createElement("div");
-    ripple.className = "ripple-effect";
-    ripple.style.left = x - 25 + "px";
-    ripple.style.top = y - 25 + "px";
-    ripple.style.width = "50px";
-    ripple.style.height = "50px";
-    ripple.style.background = `radial-gradient(circle, ${color} 0%, rgba(255,140,100,0) 75%)`;
-    document.body.appendChild(ripple);
+  // ripple effect for mobile (clean)
+  function createRippleTouch(x, y, color = "#FFD4A5") {
+    const rippleDiv = document.createElement("div");
+    rippleDiv.className = "touch-ripple";
+    rippleDiv.style.left = x - 25 + "px";
+    rippleDiv.style.top = y - 25 + "px";
+    rippleDiv.style.width = "50px";
+    rippleDiv.style.height = "50px";
+    rippleDiv.style.background = `radial-gradient(circle, ${color} 0%, rgba(255,130,90,0) 75%)`;
+    document.body.appendChild(rippleDiv);
     setTimeout(() => {
-      if (ripple && ripple.remove) ripple.remove();
+      if (rippleDiv && rippleDiv.remove) rippleDiv.remove();
     }, 700);
   }
   
-  // floating hearts & sparkles (heey celebration)
-  function launchConfettiHearts(x, y) {
-    const colors = ["#FFB7C5", "#FFA0B0", "#FFD0A8", "#FFB089"];
+  // magical heart & star burst (heey celebration)
+  function burstHeartsAndStars(x, y) {
+    const icons = ["❤️", "🌸", "✨", "💖", "🌼", "🌺", "⭐"];
     for (let i = 0; i < 22; i++) {
-      const heartOrStar = document.createElement("div");
-      const isHeart = Math.random() > 0.5;
-      heartOrStar.innerHTML = isHeart ? "❤️" : "🌸";
-      heartOrStar.style.position = "fixed";
-      heartOrStar.style.left = x + "px";
-      heartOrStar.style.top = y + "px";
-      heartOrStar.style.fontSize = (12 + Math.random() * 14) + "px";
-      heartOrStar.style.pointerEvents = "none";
-      heartOrStar.style.zIndex = "210";
-      heartOrStar.style.opacity = "0.9";
-      heartOrStar.style.filter = "drop-shadow(0 0 3px #FFC0A0)";
-      heartOrStar.style.transition = "all 0.05s linear";
-      document.body.appendChild(heartOrStar);
+      const charm = document.createElement("div");
+      const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+      charm.innerHTML = randomIcon;
+      charm.style.position = "fixed";
+      charm.style.left = x + "px";
+      charm.style.top = y + "px";
+      charm.style.fontSize = (12 + Math.random() * 16) + "px";
+      charm.style.pointerEvents = "none";
+      charm.style.zIndex = "210";
+      charm.style.opacity = "0.9";
+      charm.style.filter = "drop-shadow(0 0 3px #FFBC8C)";
+      document.body.appendChild(charm);
       
       const angle = Math.random() * Math.PI * 2;
-      const speed = 2 + Math.random() * 7;
+      const speed = 1.8 + Math.random() * 6.5;
       let vx = Math.cos(angle) * speed;
-      let vy = Math.sin(angle) * speed - 1.8;
+      let vy = Math.sin(angle) * speed - 1.5;
       let posX = x, posY = y;
       let life = 1.0;
-      let rotation = 0;
+      let rot = Math.random() * 360;
       
-      function flyHeart() {
-        if (life <= 0.02 || posY < -80 || posX > window.innerWidth + 100 || posX < -100) {
-          if (heartOrStar.parentNode) heartOrStar.remove();
+      function flyCharm() {
+        if (life <= 0.02 || posY < -60 || posX > window.innerWidth + 100 || posX < -100) {
+          if (charm.parentNode) charm.remove();
           return;
         }
         posX += vx;
         posY += vy;
         vy += 0.1;
-        life -= 0.016;
-        rotation += 7;
-        heartOrStar.style.transform = `translate(${posX - x}px, ${posY - y}px) rotate(${rotation}deg)`;
-        heartOrStar.style.opacity = life * 0.9;
-        requestAnimationFrame(flyHeart);
+        life -= 0.017;
+        rot += 8;
+        charm.style.transform = `translate(${posX - x}px, ${posY - y}px) rotate(${rot}deg)`;
+        charm.style.opacity = life * 0.9;
+        requestAnimationFrame(flyCharm);
       }
-      requestAnimationFrame(flyHeart);
+      requestAnimationFrame(flyCharm);
       setTimeout(() => {
-        if (heartOrStar.parentNode) heartOrStar.remove();
-      }, 1800);
+        if (charm.parentNode) charm.remove();
+      }, 1600);
     }
   }
   
-  // create a floating "heey" text word bubble
-  function createSweetWordPopup(x, y) {
-    const word = document.createElement("div");
-    const messages = ["heey ✨", "sweet!", "🌸 hey", "💕 lovely", "hey you ✿"];
-    word.innerText = messages[Math.floor(Math.random() * messages.length)];
-    word.style.position = "fixed";
-    word.style.left = x + "px";
-    word.style.top = y + "px";
-    word.style.fontSize = "1.5rem";
-    word.style.fontWeight = "bold";
-    word.style.fontFamily = "'Segoe UI', 'Poppins', cursive";
-    word.style.background = "linear-gradient(135deg, #FFE0B5, #FFB8C0)";
-    word.style.webkitBackgroundClip = "text";
-    word.style.backgroundClip = "text";
-    word.style.color = "transparent";
-    word.style.textShadow = "0 0 8px #FFAE8A";
-    word.style.whiteSpace = "nowrap";
-    word.style.pointerEvents = "none";
-    word.style.zIndex = "250";
-    word.style.opacity = "1";
-    word.style.filter = "drop-shadow(0 2px 4px rgba(0,0,0,0.2))";
-    document.body.appendChild(word);
+  // floating "heey" word popup sweet
+  function floatingHeeyText(x, y) {
+    const wordDiv = document.createElement("div");
+    const greetings = ["heey ✨", "💕 hey!", "sweet you", "🌸 lovely", "heey 💖"];
+    wordDiv.innerText = greetings[Math.floor(Math.random() * greetings.length)];
+    wordDiv.style.position = "fixed";
+    wordDiv.style.left = x + "px";
+    wordDiv.style.top = y + "px";
+    wordDiv.style.fontSize = "1.5rem";
+    wordDiv.style.fontWeight = "bold";
+    wordDiv.style.fontFamily = "'Segoe UI', 'Poppins', cursive";
+    wordDiv.style.background = "linear-gradient(125deg, #FFE2BC, #FFBACB)";
+    wordDiv.style.webkitBackgroundClip = "text";
+    wordDiv.style.backgroundClip = "text";
+    wordDiv.style.color = "transparent";
+    wordDiv.style.whiteSpace = "nowrap";
+    wordDiv.style.pointerEvents = "none";
+    wordDiv.style.zIndex = "250";
+    wordDiv.style.textShadow = "0 0 12px #FFB080";
+    wordDiv.style.backdropFilter = "blur(2px)";
+    document.body.appendChild(wordDiv);
     
     let offsetY = 0;
     let opacityVal = 1;
-    function riseAndFade() {
-      offsetY -= 1.6;
+    function riseSweet() {
+      offsetY -= 1.8;
       opacityVal -= 0.018;
       if (opacityVal <= 0) {
-        if (word.parentNode) word.remove();
+        if (wordDiv.parentNode) wordDiv.remove();
         return;
       }
-      word.style.transform = `translate(${0}px, ${offsetY}px) scale(${1 + offsetY * 0.008})`;
-      word.style.opacity = opacityVal;
-      requestAnimationFrame(riseAndFade);
+      wordDiv.style.transform = `translate(${0}px, ${offsetY}px) scale(${1 + offsetY * 0.008})`;
+      wordDiv.style.opacity = opacityVal;
+      requestAnimationFrame(riseSweet);
     }
-    requestAnimationFrame(riseAndFade);
+    requestAnimationFrame(riseSweet);
     setTimeout(() => {
-      if (word.parentNode) word.remove();
-    }, 1300);
+      if (wordDiv.parentNode) wordDiv.remove();
+    }, 1200);
   }
   
-  // mini petal shower for extra interactive sweetness
-  function sendMiniPetalShower(x, y) {
+  // mini petal sprinkle (from the core burst)
+  function miniPetalSprinkle(x, y) {
     for (let i = 0; i < 14; i++) {
-      const tinyPetal = document.createElement("div");
-      tinyPetal.className = "micro-petal";
-      tinyPetal.style.width = "10px";
-      tinyPetal.style.height = "12px";
-      tinyPetal.style.background = `radial-gradient(circle, #FFAABA, #E9557A)`;
-      tinyPetal.style.borderRadius = "65% 35% 55% 45% / 58% 42% 58% 42%";
-      tinyPetal.style.left = x + "px";
-      tinyPetal.style.top = y + "px";
-      tinyPetal.style.boxShadow = "0 0 4px #FFB080";
-      document.body.appendChild(tinyPetal);
+      const petalPiece = document.createElement("div");
+      petalPiece.className = "micro-bloom";
+      petalPiece.style.width = "9px";
+      petalPiece.style.height = "11px";
+      petalPiece.style.background = `radial-gradient(circle, #FFAABA, #F8557F)`;
+      petalPiece.style.borderRadius = "70% 30% 60% 40% / 55% 45% 55% 45%";
+      petalPiece.style.left = x + "px";
+      petalPiece.style.top = y + "px";
+      petalPiece.style.boxShadow = "0 0 5px #FFA57A";
+      document.body.appendChild(petalPiece);
       
       const angle = Math.random() * Math.PI * 2;
-      const velocity = 1.5 + Math.random() * 6;
+      const velocity = 1.4 + Math.random() * 5;
       let dx = Math.cos(angle) * velocity;
-      let dy = Math.sin(angle) * velocity - 1;
+      let dy = Math.sin(angle) * velocity - 1.2;
       let posX = 0, posY = 0;
-      let lifetime = 1;
-      let rotateDelta = Math.random() * 20;
+      let life = 1;
+      let rotSpiral = Math.random() * 25;
       
-      function flyPetal() {
+      function flyPiece() {
         posX += dx;
         posY += dy;
-        dy += 0.12;
-        lifetime -= 0.022;
-        if (lifetime <= 0 || posY > 300 || Math.abs(posX) > 280) {
-          if (tinyPetal.parentNode) tinyPetal.remove();
+        dy += 0.1;
+        life -= 0.023;
+        if (life <= 0 || posY > 280 || Math.abs(posX) > 260) {
+          if (petalPiece.parentNode) petalPiece.remove();
           return;
         }
-        tinyPetal.style.transform = `translate(${posX}px, ${posY}px) rotate(${rotateDelta + posX}deg)`;
-        tinyPetal.style.opacity = lifetime * 0.8;
-        requestAnimationFrame(flyPetal);
+        petalPiece.style.transform = `translate(${posX}px, ${posY}px) rotate(${rotSpiral + posX}deg)`;
+        petalPiece.style.opacity = life * 0.8;
+        requestAnimationFrame(flyPiece);
       }
-      requestAnimationFrame(flyPetal);
+      requestAnimationFrame(flyPiece);
       setTimeout(() => {
-        if (tinyPetal.parentNode) tinyPetal.remove();
-      }, 1200);
+        if (petalPiece.parentNode) petalPiece.remove();
+      }, 1000);
     }
   }
   
-  // generate floating glitter dust background (dreamlike)
+  function softPetalShower(x, y) {
+    for (let i = 0; i < 10; i++) {
+      const leaflet = document.createElement("div");
+      leaflet.className = "micro-bloom";
+      leaflet.style.width = "8px";
+      leaflet.style.height = "10px";
+      leaflet.style.background = `radial-gradient(circle, #FFB5C2, #E65079)`;
+      leaflet.style.borderRadius = "60% 40% 65% 35% / 50% 45% 55% 45%";
+      leaflet.style.left = x + "px";
+      leaflet.style.top = y + "px";
+      document.body.appendChild(leaflet);
+      
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 1.5 + Math.random() * 4.5;
+      let dx = Math.cos(angle) * speed;
+      let dy = Math.sin(angle) * speed - 1;
+      let posX = 0, posY = 0;
+      let life = 1;
+      function moveLeaf() {
+        posX += dx;
+        posY += dy;
+        dy += 0.08;
+        life -= 0.025;
+        if (life <= 0 || Math.abs(posY) > 200) {
+          if (leaflet.parentNode) leaflet.remove();
+          return;
+        }
+        leaflet.style.transform = `translate(${posX}px, ${posY}px) rotate(${posX}deg)`;
+        leaflet.style.opacity = life * 0.7;
+        requestAnimationFrame(moveLeaf);
+      }
+      requestAnimationFrame(moveLeaf);
+      setTimeout(() => leaflet.remove(), 900);
+    }
+  }
+  
+  // floating dust field (mobile friendly)
   function initDustField() {
     const dustContainer = document.getElementById("dustField");
     if (!dustContainer) return;
-    const dustCount = 75;
+    const dustCount = 55;
     for (let i = 0; i < dustCount; i++) {
       const dust = document.createElement("div");
-      dust.classList.add("dust-particle");
-      const size = 2 + Math.random() * 6;
+      dust.classList.add("dustie");
+      const size = 2 + Math.random() * 5;
       dust.style.width = size + "px";
       dust.style.height = size + "px";
       dust.style.left = Math.random() * 100 + "%";
-      dust.style.animationDuration = 5 + Math.random() * 18 + "s";
-      dust.style.animationDelay = Math.random() * 14 + "s";
-      dust.style.opacity = 0.2 + Math.random() * 0.5;
-      dust.style.background = `radial-gradient(circle, #FFCBA4, #FFA5C0)`;
+      dust.style.animationDuration = 4 + Math.random() * 15 + "s";
+      dust.style.animationDelay = Math.random() * 12 + "s";
+      dust.style.opacity = 0.2 + Math.random() * 0.45;
+      dust.style.background = `radial-gradient(circle, #FFCFB5, #FFA7B8)`;
       dustContainer.appendChild(dust);
     }
-    // also floating gentle "heey" whispers in console of love: micro floating emojis periodically
+    // gentle floating mini hearts occasionally
     setInterval(() => {
       if (document.hidden) return;
-      const silentEmoji = document.createElement("div");
-      silentEmoji.innerHTML = "✿";
-      silentEmoji.style.position = "fixed";
-      silentEmoji.style.left = Math.random() * 100 + "%";
-      silentEmoji.style.bottom = "-15px";
-      silentEmoji.style.fontSize = "12px";
-      silentEmoji.style.color = `rgba(255, 190, 160, 0.5)`;
-      silentEmoji.style.pointerEvents = "none";
-      silentEmoji.style.zIndex = "3";
-      silentEmoji.style.animation = `floatGentle ${9 + Math.random() * 8}s linear forwards`;
-      silentEmoji.style.opacity = "0.5";
-      document.body.appendChild(silentEmoji);
-      setTimeout(() => silentEmoji.remove(), 10000);
-    }, 3200);
+      const driftHeart = document.createElement("div");
+      driftHeart.innerHTML = "✧";
+      driftHeart.style.position = "fixed";
+      driftHeart.style.left = Math.random() * 100 + "%";
+      driftHeart.style.bottom = "-15px";
+      driftHeart.style.fontSize = "12px";
+      driftHeart.style.color = `rgba(255, 190, 165, 0.5)`;
+      driftHeart.style.pointerEvents = "none";
+      driftHeart.style.zIndex = "3";
+      driftHeart.style.animation = `floatGentle 10s linear forwards`;
+      driftHeart.style.opacity = "0.5";
+      document.body.appendChild(driftHeart);
+      setTimeout(() => driftHeart.remove(), 10000);
+    }, 3400);
   }
   
-  // add gentle floating keyframes for emoji
-  const addFloatKeyframes = () => {
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes floatGentle {
-        0% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
-        100% { transform: translateY(-100vh) rotate(12deg); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-  };
+  const styleFloat = document.createElement('style');
+  styleFloat.textContent = `
+    @keyframes floatGentle {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+      100% { transform: translateY(-100vh) rotate(12deg); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(styleFloat);
   
-  // auto-refresh petal shine periodically
-  function shimmerPetalsRandomly() {
-    setInterval(() => {
-      const petals = document.querySelectorAll('.petal');
-      if (!petals.length) return;
-      const randomIndex = Math.floor(Math.random() * petals.length);
-      const petal = petals[randomIndex];
-      if (petal) {
-        petal.style.filter = "brightness(1.18) drop-shadow(0 0 5px #FFAF90)";
-        setTimeout(() => {
-          if (petal) petal.style.filter = "";
-        }, 380);
-      }
-    }, 1800);
-  }
+  // random petal shimmer periodically
+  setInterval(() => {
+    const petals = document.querySelectorAll('.petal');
+    if (!petals.length) return;
+    const randomPetal = petals[Math.floor(Math.random() * petals.length)];
+    if (randomPetal) {
+      randomPetal.style.filter = "brightness(1.15) drop-shadow(0 0 5px #FFB28C)";
+      setTimeout(() => {
+        if (randomPetal) randomPetal.style.filter = "";
+      }, 350);
+    }
+  }, 1900);
   
-  // welcome effect: tiny heey on load
   window.addEventListener('load', () => {
     initDustField();
-    addFloatKeyframes();
-    shimmerPetalsRandomly();
-    
-    // optional: mild entrance "heey" burst from center after 0.3 sec
+    // welcome touch: tiny heey greeting pop after load
     setTimeout(() => {
-      const center = document.querySelector('.heart-center');
-      if (center) {
-        const rect = center.getBoundingClientRect();
-        const x = rect.left + rect.width / 2;
-        const y = rect.top + rect.height / 2;
-        createSweetWordPopup(x, y);
-        createRippleWave(x, y, "#FFD9B0");
+      const core = document.querySelector('.starlight-core');
+      if (core) {
+        const rect = core.getBoundingClientRect();
+        const x = rect.left + rect.width/2;
+        const y = rect.top + rect.height/2;
+        floatingHeeyText(x, y);
       }
-    }, 400);
+    }, 500);
   });
 </script>
 </body>
