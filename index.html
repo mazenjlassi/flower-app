@@ -1,145 +1,632 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Luxury Flower</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Sweet Bloom | Interactive Flower</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
 
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: radial-gradient(circle at center, #0b0b0f, #000000);
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-  }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #1a0b1a 0%, #0a0510 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', 'Poppins', 'Inter', system-ui, -apple-system, 'Playfair Display', serif;
+      overflow: hidden;
+      cursor: default;
+    }
 
-  /* Soft luxury particles */
-  body::before {
-    content: "";
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,215,0,0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: moveBg 40s linear infinite;
-  }
+    /* animated, dreamy background particles */
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  @keyframes moveBg {
-    from { transform: translate(0,0); }
-    to { transform: translate(-60px,-60px); }
-  }
+    .bg-glow::before,
+    .bg-glow::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 40%, rgba(255, 180, 200, 0.2) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(255, 220, 150, 0.15) 0%, transparent 55%);
+      animation: breatheGlow 12s ease-in-out infinite alternate;
+    }
 
-  .flower {
-    position: relative;
-    width: 260px;
-    height: 260px;
-  }
+    .bg-glow::after {
+      background: radial-gradient(circle at 60% 20%, rgba(210, 120, 180, 0.15) 0%, transparent 60%);
+      animation: breatheGlow 14s ease-in-out infinite alternate-reverse;
+    }
 
-  .petal {
-    position: absolute;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    transform-origin: bottom right;
-    opacity: 0;
+    @keyframes breatheGlow {
+      0% { opacity: 0.5; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.05); }
+    }
 
-    background: radial-gradient(circle at 30% 30%, #8b0000, #2b0000);
-    box-shadow:
-      0 0 25px rgba(139, 0, 0, 0.6),
-      inset 0 0 20px rgba(0,0,0,0.7);
+    /* floating shimmer particles (canvas-like dots) */
+    .floating-dust {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-    animation: bloom 2.5s ease-out forwards;
-  }
-
-  .center {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    top: 95px;
-    left: 95px;
-    border-radius: 50%;
-    z-index: 2;
-
-    background: radial-gradient(circle, #ffd700, #b8860b);
-    box-shadow:
-      0 0 30px rgba(255,215,0,0.9),
-      0 0 60px rgba(255,215,0,0.4);
-
-    animation: pulse 3s ease-in-out infinite;
-  }
-
-  /* subtle shine overlay */
-  .center::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent);
-  }
-
-  @keyframes bloom {
-    0% {
-      transform: scale(0) rotate(0deg);
+    .dust {
+      position: absolute;
+      background: radial-gradient(circle, rgba(255, 235, 200, 0.8), rgba(255, 200, 220, 0));
+      border-radius: 50%;
+      animation: floatDust linear infinite;
       opacity: 0;
-      filter: blur(5px);
     }
-    100% {
-      transform: scale(1) rotate(var(--angle));
-      opacity: 1;
-      filter: blur(0);
+
+    @keyframes floatDust {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.4; }
+      100% {
+        transform: translateY(-20vh) scale(1.2);
+        opacity: 0;
+      }
     }
-  }
 
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-  }
+    /* main card container — soft & glassy */
+    .card {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+    }
 
-  /* romantic text (optional) */
-  .text {
-    position: absolute;
-    bottom: 40px;
-    color: rgba(255,255,255,0.7);
-    font-size: 18px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-</style>
+    /* flower wrapper with gentle hover lift */
+    .flower-wrapper {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.3));
+    }
 
+    .flower-wrapper:hover {
+      transform: scale(1.02);
+    }
+
+    .flower {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+
+    /* petal design: modern gradient with silk texture */
+    .petal {
+      position: absolute;
+      width: 130px;
+      height: 140px;
+      border-radius: 70% 30% 70% 40% / 60% 50% 50% 40%;
+      transform-origin: bottom right;
+      opacity: 0;
+      background: radial-gradient(ellipse at 35% 30%, 
+        rgb(255, 110, 140), 
+        rgb(210, 45, 85) 40%,
+        rgb(140, 20, 55));
+      box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.3),
+        inset 0 2px 8px rgba(255, 255, 200, 0.3),
+        0 0 12px rgba(255, 80, 120, 0.5);
+      transition: box-shadow 0.2s;
+      animation: bloomLuxury 1.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+    }
+
+    /* alternate petal shapes for organic lux feel */
+    .petal:nth-child(odd) {
+      border-radius: 65% 35% 70% 30% / 55% 45% 55% 45%;
+    }
+
+    .petal:nth-child(even) {
+      border-radius: 55% 45% 60% 40% / 45% 55% 45% 55%;
+    }
+
+    @keyframes bloomLuxury {
+      0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+        filter: blur(12px);
+      }
+      40% {
+        filter: blur(3px);
+      }
+      100% {
+        transform: scale(1) rotate(var(--angle));
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
+    /* center: exquisite gem-like core */
+    .center {
+      position: absolute;
+      width: 88px;
+      height: 88px;
+      top: 96px;
+      left: 96px;
+      border-radius: 50%;
+      z-index: 15;
+      background: radial-gradient(circle at 35% 35%, 
+        #FFE6B0, 
+        #F4B942 20%,
+        #D48A2A 70%,
+        #B45F1B);
+      box-shadow: 
+        0 0 28px rgba(255, 200, 100, 0.9),
+        0 0 45px rgba(255, 150, 70, 0.5),
+        inset 0 2px 6px rgba(255, 255, 200, 0.7);
+      animation: gentlePulse 3s ease-in-out infinite;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .center:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 42px rgba(255, 210, 120, 1);
+    }
+
+    .center::before {
+      content: "✨";
+      position: absolute;
+      top: 12px;
+      left: 20px;
+      font-size: 22px;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 2px gold);
+      animation: sparkleTwirl 4s infinite;
+      pointer-events: none;
+    }
+
+    .center::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 245, 190, 0.5), transparent 70%);
+      pointer-events: none;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); box-shadow: 0 0 38px rgba(255, 190, 80, 0.9); }
+    }
+
+    @keyframes sparkleTwirl {
+      0% { transform: rotate(0deg) translateX(0px); opacity: 0.7; }
+      50% { transform: rotate(12deg) translateX(3px); opacity: 1; }
+      100% { transform: rotate(0deg) translateX(0px); opacity: 0.7; }
+    }
+
+    /* sweet typography: modern & dreamy */
+    .message-area {
+      text-align: center;
+      margin-top: 2.5rem;
+      z-index: 12;
+    }
+
+    .sweet-line {
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #FFDFC4, #FFB7C5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 8px rgba(255, 160, 160, 0.3);
+      animation: textGlow 3s infinite alternate;
+    }
+
+    .sub-line {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(255, 220, 200, 0.8);
+      margin-top: 10px;
+      letter-spacing: 3px;
+      backdrop-filter: blur(5px);
+      display: inline-block;
+      padding: 0 12px;
+      border-radius: 40px;
+      background: rgba(30, 12, 24, 0.4);
+    }
+
+    @keyframes textGlow {
+      0% { text-shadow: 0 0 2px rgba(255, 200, 170, 0.3); opacity: 0.9; }
+      100% { text-shadow: 0 0 12px rgba(255, 180, 150, 0.6); opacity: 1; }
+    }
+
+    /* interactive ripple effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,215,140,0.6) 0%, rgba(255,180,100,0) 80%);
+      transform: scale(0);
+      animation: rippleAnim 0.8s ease-out forwards;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    @keyframes rippleAnim {
+      0% {
+        transform: scale(0);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* responsive and graceful */
+    @media (max-width: 520px) {
+      .flower {
+        width: 240px;
+        height: 240px;
+      }
+      .center {
+        width: 74px;
+        height: 74px;
+        top: 83px;
+        left: 83px;
+      }
+      .petal {
+        width: 110px;
+        height: 120px;
+      }
+      .flower-wrapper {
+        width: 260px;
+        height: 260px;
+      }
+      .sweet-line {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* little bloom hint */
+    .scent-note {
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      font-size: 10px;
+      color: rgba(255, 190, 170, 0.4);
+      z-index: 15;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
 <body>
+<div class="bg-glow"></div>
+<div class="floating-dust" id="dustContainer"></div>
 
-<div class="flower" id="flower"></div>
-<div class="text">For You</div>
+<div class="card">
+  <div class="flower-wrapper">
+    <div class="flower" id="luxuryFlower"></div>
+  </div>
+  <div class="message-area">
+    <div class="sweet-line">✦ bloom for you ✦</div>
+    <div class="sub-line">sweet elegance</div>
+  </div>
+  <div class="scent-note">✦ touch the heart ✦</div>
+</div>
 
 <script>
-  const flower = document.getElementById("flower");
-  const petalCount = 14;
-
-  for (let i = 0; i < petalCount; i++) {
-    const petal = document.createElement("div");
-    petal.className = "petal";
-
-    const angle = (360 / petalCount) * i;
-    petal.style.setProperty('--angle', angle + 'deg');
-
-    petal.style.top = "65px";
-    petal.style.left = "65px";
-
-    // slow luxury animation delay
-    petal.style.animationDelay = (i * 0.15) + "s";
-
-    flower.appendChild(petal);
+  (function createLuxuryFlower() {
+    const flowerContainer = document.getElementById("luxuryFlower");
+    if (!flowerContainer) return;
+    
+    // increased petal count for lushness
+    const petalCount = 16;
+    const baseOffset = 68;   // offset from center for richer spread
+    const flowerCenter = 140; // virtual center 140px (280/2)
+    
+    for (let i = 0; i < petalCount; i++) {
+      const petal = document.createElement("div");
+      petal.className = "petal";
+      
+      // each petal unique rotation based on index
+      const angleDeg = (360 / petalCount) * i;
+      petal.style.setProperty('--angle', angleDeg + 'deg');
+      
+      // placement: rotate from center with transform-origin at (0%, 100%) approximately
+      // using bottom right as origin (for elegant fan)
+      petal.style.top = "70px";
+      petal.style.left = "70px";
+      
+      // creative delay: makes petals appear in romantic sequence
+      const delay = i * 0.08;
+      petal.style.animationDelay = delay + "s";
+      
+      // subtle extra transformation for some to vary depth impression
+      if (i % 3 === 0) {
+        petal.style.filter = "brightness(1.05) saturate(1.1)";
+      }
+      if (i % 5 === 2) {
+        petal.style.width = "128px";
+        petal.style.height = "138px";
+      }
+      
+      flowerContainer.appendChild(petal);
+    }
+    
+    // create center jewel
+    const centerCore = document.createElement("div");
+    centerCore.className = "center";
+    flowerContainer.appendChild(centerCore);
+    
+    // improve interactive experience: center emits spark ripples on click
+    centerCore.addEventListener("click", (e) => {
+      e.stopPropagation();
+      createRippleEffect(e.clientX, e.clientY);
+      
+      // additional joy: slight bounce and extra glow + new floating hearts
+      centerCore.style.animation = "none";
+      setTimeout(() => {
+        centerCore.style.animation = "gentlePulse 3s ease-in-out infinite";
+      }, 10);
+      
+      // trigger burst of tiny petals / sparkles
+      createSparkleBurst(e.clientX, e.clientY);
+      
+      // optional: add tiny musical note vibe? just for UX delight we change message temporary.
+      const sweetMsg = document.querySelector(".sweet-line");
+      const originalText = sweetMsg.innerText;
+      sweetMsg.innerText = "💖 you make it sweeter 💖";
+      sweetMsg.style.transform = "scale(1.05)";
+      setTimeout(() => {
+        sweetMsg.innerText = originalText;
+        sweetMsg.style.transform = "";
+      }, 1000);
+    });
+    
+    // also flower wrapper click creates interactive bubbles
+    const wrapper = document.querySelector(".flower-wrapper");
+    wrapper.addEventListener("click", (e) => {
+      if (e.target === centerCore) return;
+      const rect = wrapper.getBoundingClientRect();
+      const x = e.clientX;
+      const y = e.clientY;
+      createRippleEffect(x, y, "#FFD9B5");
+      createMiniPetalBurst(x, y);
+    });
+  })();
+  
+  // Ripples for luxurious feedback
+  function createRippleEffect(x, y, colorHint = null) {
+    const rippleDiv = document.createElement("div");
+    rippleDiv.classList.add("ripple");
+    const bgColor = colorHint ? `radial-gradient(circle, ${colorHint} 0%, rgba(255,180,120,0) 80%)` : `radial-gradient(circle, rgba(255,215,170,0.7) 0%, rgba(255,150,100,0) 80%)`;
+    rippleDiv.style.background = bgColor;
+    rippleDiv.style.left = x - 20 + "px";
+    rippleDiv.style.top = y - 20 + "px";
+    rippleDiv.style.width = "40px";
+    rippleDiv.style.height = "40px";
+    rippleDiv.style.position = "fixed";
+    rippleDiv.style.pointerEvents = "none";
+    document.body.appendChild(rippleDiv);
+    setTimeout(() => {
+      rippleDiv.remove();
+    }, 800);
   }
-
-  const center = document.createElement("div");
-  center.className = "center";
-  flower.appendChild(center);
+  
+  // generate sparkling dust on click like tiny stars
+  function createSparkleBurst(x, y) {
+    for (let i = 0; i < 18; i++) {
+      const spark = document.createElement("div");
+      spark.style.position = "fixed";
+      spark.style.width = "6px";
+      spark.style.height = "6px";
+      spark.style.background = `radial-gradient(circle, #FFE7A0, #FFB378)`;
+      spark.style.borderRadius = "50%";
+      spark.style.left = x + "px";
+      spark.style.top = y + "px";
+      spark.style.pointerEvents = "none";
+      spark.style.zIndex = "200";
+      spark.style.boxShadow = "0 0 12px gold";
+      document.body.appendChild(spark);
+      
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = 3 + Math.random() * 7;
+      const vx = Math.cos(angle) * velocity;
+      const vy = Math.sin(angle) * velocity;
+      let posX = x, posY = y;
+      let opacity = 0.9;
+      
+      function animateSpark() {
+        posX += vx;
+        posY += vy;
+        opacity -= 0.025;
+        if (opacity <= 0 || posY < 0 || posX > window.innerWidth + 50 || posX < -50 || posY > window.innerHeight + 50) {
+          spark.remove();
+          return;
+        }
+        spark.style.transform = `translate(${posX - x}px, ${posY - y}px) scale(${0.5 + opacity})`;
+        spark.style.opacity = opacity;
+        requestAnimationFrame(animateSpark);
+      }
+      requestAnimationFrame(animateSpark);
+      
+      setTimeout(() => {
+        if (spark.parentNode) spark.remove();
+      }, 900);
+    }
+  }
+  
+  // micro petal burst for sweetener
+  function createMiniPetalBurst(x, y) {
+    for (let i = 0; i < 10; i++) {
+      const mini = document.createElement("div");
+      mini.style.position = "fixed";
+      mini.style.width = "12px";
+      mini.style.height = "14px";
+      mini.style.background = `radial-gradient(circle, #FFA5B9, #E9547A)`;
+      mini.style.borderRadius = "70% 30% 60% 40% / 50% 40% 60% 50%";
+      mini.style.left = x + "px";
+      mini.style.top = y + "px";
+      mini.style.pointerEvents = "none";
+      mini.style.zIndex = "180";
+      mini.style.filter = "blur(0.5px)";
+      document.body.appendChild(mini);
+      
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 2 + Math.random() * 5;
+      let xPos = 0, yPos = 0;
+      let life = 1;
+      const rot = Math.random() * 360;
+      mini.style.transform = `rotate(${rot}deg)`;
+      
+      function fly() {
+        xPos += Math.cos(angle) * speed;
+        yPos += Math.sin(angle) * speed;
+        life -= 0.025;
+        if (life <= 0 || Math.abs(xPos) > 180 || Math.abs(yPos) > 180) {
+          mini.remove();
+          return;
+        }
+        mini.style.transform = `translate(${xPos}px, ${yPos}px) rotate(${rot + xPos}deg) scale(${0.7 + life})`;
+        mini.style.opacity = life * 0.7;
+        requestAnimationFrame(fly);
+      }
+      requestAnimationFrame(fly);
+      setTimeout(() => {
+        if (mini.parentNode) mini.remove();
+      }, 800);
+    }
+  }
+  
+  // generate floating background shimmer dust (ambient UX)
+  function initAmbientDust() {
+    const dustContainer = document.getElementById("dustContainer");
+    if (!dustContainer) return;
+    const dustCount = 55;
+    for (let i = 0; i < dustCount; i++) {
+      const dust = document.createElement("div");
+      dust.classList.add("dust");
+      const size = 2 + Math.random() * 6;
+      dust.style.width = size + "px";
+      dust.style.height = size + "px";
+      dust.style.left = Math.random() * 100 + "%";
+      dust.style.animationDuration = 6 + Math.random() * 15 + "s";
+      dust.style.animationDelay = Math.random() * 15 + "s";
+      dust.style.opacity = 0.2 + Math.random() * 0.5;
+      dust.style.background = `radial-gradient(circle, rgba(255,210,160,0.9), rgba(255,130,170,0.4))`;
+      dustContainer.appendChild(dust);
+    }
+    // also occasional floating hearts through setInterval? subtle elegance
+    setInterval(() => {
+      if (document.hidden) return;
+      const heart = document.createElement("div");
+      heart.innerHTML = "✦";
+      heart.style.position = "fixed";
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.bottom = "-20px";
+      heart.style.fontSize = "14px";
+      heart.style.color = `rgba(255, 190, 170, ${0.3 + Math.random() * 0.4})`;
+      heart.style.pointerEvents = "none";
+      heart.style.zIndex = "5";
+      heart.style.fontWeight = "normal";
+      heart.style.opacity = "0.7";
+      heart.style.animation = `floatUp ${6 + Math.random() * 8}s linear forwards`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }, 3800);
+  }
+  
+  // define floatUp keyframe for hearts
+  const styleSheet = document.createElement("style");
+  styleSheet.textContent = `
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+      100% { transform: translateY(-100vh) rotate(20deg); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(styleSheet);
+  
+  // decorative interactive gradient on flowerWrapper hover adds extra glow to petals.
+  const flowerWrap = document.querySelector('.flower-wrapper');
+  if (flowerWrap) {
+    flowerWrap.addEventListener('mousemove', (e) => {
+      const rect = flowerWrap.getBoundingClientRect();
+      const xPos = ((e.clientX - rect.left) / rect.width) * 100;
+      const yPos = ((e.clientY - rect.top) / rect.height) * 100;
+      flowerWrap.style.setProperty('--glow-x', `${xPos}%`);
+      flowerWrap.style.setProperty('--glow-y', `${yPos}%`);
+    });
+    // add dynamic extra glow to flower wrapper maybe
+    const styleGlow = document.createElement('style');
+    styleGlow.textContent = `
+      .flower-wrapper {
+        --glow-x: 50%;
+        --glow-y: 50%;
+      }
+      .flower-wrapper:hover .petal {
+        box-shadow: 0 0 18px rgba(255, 100, 130, 0.5), inset 0 1px 5px rgba(255,255,200,0.3);
+        transition: box-shadow 0.2s;
+      }
+    `;
+    document.head.appendChild(styleGlow);
+  }
+  
+  // make petals sparkle occasionally timed
+  function subtleSparkleDance() {
+    const petals = document.querySelectorAll('.petal');
+    if (!petals.length) return;
+    setInterval(() => {
+      if (Math.random() > 0.65) {
+        const randomPetal = petals[Math.floor(Math.random() * petals.length)];
+        if (randomPetal) {
+          randomPetal.style.filter = "brightness(1.15) drop-shadow(0 0 4px #FFB080)";
+          setTimeout(() => {
+            if (randomPetal) randomPetal.style.filter = "";
+          }, 350);
+        }
+      }
+    }, 1200);
+  }
+  
+  // init all magic
+  window.addEventListener('load', () => {
+    initAmbientDust();
+    subtleSparkleDance();
+    
+    // add hover parallax illusion on flower center and sweet text extra touch
+    const flowerCenterEl = document.querySelector('.center');
+    if (flowerCenterEl) {
+      flowerCenterEl.addEventListener('mouseenter', () => {
+        const centerMsg = document.querySelector('.sweet-line');
+        if (centerMsg) centerMsg.style.transform = "scale(1.02)";
+      });
+      flowerCenterEl.addEventListener('mouseleave', () => {
+        const centerMsg = document.querySelector('.sweet-line');
+        if (centerMsg) centerMsg.style.transform = "";
+      });
+    }
+    
+    // responsive resize confirmation – fine
+  });
 </script>
-
 </body>
 </html>
