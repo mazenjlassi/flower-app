@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>heey · MONTAAAA sweet flower</title>
+  <title>heey · MONTAAAA | mathematical flower</title>
   <style>
     * {
       margin: 0;
@@ -51,7 +51,6 @@
       100% { opacity: 1; transform: scale(1.06); }
     }
 
-    /* floating tiny particles (mobile friendly perf) */
     .dust-sky {
       position: fixed;
       width: 100%;
@@ -67,19 +66,12 @@
       opacity: 0;
     }
     @keyframes floatUpSlow {
-      0% {
-        transform: translateY(100vh) scale(0);
-        opacity: 0;
-      }
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
       20% { opacity: 0.5; }
       80% { opacity: 0.35; }
-      100% {
-        transform: translateY(-20vh) scale(1);
-        opacity: 0;
-      }
+      100% { transform: translateY(-20vh) scale(1); opacity: 0; }
     }
 
-    /* main content */
     .sweet-container {
       position: relative;
       z-index: 20;
@@ -88,190 +80,33 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      max-width: 400px;
+      max-width: 450px;
       margin: 0 auto;
     }
 
-    /* flower holder */
-    .flower-stage {
+    canvas {
       position: relative;
-      width: 86vw;
-      max-width: 320px;
-      height: 86vw;
-      max-height: 320px;
+      display: block;
       margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.25s ease;
-    }
-    .flower-stage:active {
-      transform: scale(0.99);
-    }
-
-    .flower {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* REAL FLOWER ANIMATION - petals bloom organically like a time-lapse */
-    .petal {
-      position: absolute;
-      width: 48%;
-      height: 52%;
-      border-radius: 75% 25% 65% 35% / 60% 45% 55% 40%;
-      transform-origin: bottom right;
-      opacity: 0;
-      background: radial-gradient(ellipse at 32% 30%, 
-        #FFB7C5, 
-        #FF88AE 40%,
-        #E64B74 75%,
-        #B2224A);
-      box-shadow: 
-        0 8px 18px rgba(0, 0, 0, 0.2),
-        inset 0 1px 6px rgba(255, 245, 210, 0.5),
-        0 0 12px rgba(255, 90, 120, 0.4);
-      transition: filter 0.2s;
-      /* REALISTIC BLOOM: starts curled, slowly opens and rotates into final position */
-      animation: realBloom 2.2s cubic-bezier(0.2, 0.85, 0.25, 1.1) forwards;
-      will-change: transform, opacity;
-    }
-    
-    /* organic variation */
-    .petal:nth-child(odd) {
-      border-radius: 68% 32% 72% 28% / 55% 48% 52% 45%;
-    }
-    .petal:nth-child(3n) {
-      background: radial-gradient(ellipse at 35% 30%, #FFC0CF, #FF779F, #D63E6A);
-      width: 47%;
-      height: 53%;
-    }
-    
-    /* REAL FLOWER BLOOM KEYFRAMES - starts closed/bud-like, expands outward */
-    @keyframes realBloom {
-      0% {
-        transform: scale(0.15) rotate(calc(var(--angle) - 35deg));
-        opacity: 0;
-        filter: blur(12px);
-        border-radius: 80% 20% 80% 20% / 50% 50% 50% 50%;
-      }
-      25% {
-        opacity: 0.4;
-        filter: blur(6px);
-        transform: scale(0.4) rotate(calc(var(--angle) - 20deg));
-      }
-      50% {
-        opacity: 0.7;
-        filter: blur(3px);
-        transform: scale(0.7) rotate(calc(var(--angle) - 10deg));
-        border-radius: 75% 25% 70% 30% / 55% 45% 55% 45%;
-      }
-      75% {
-        transform: scale(0.9) rotate(calc(var(--angle) - 3deg));
-        filter: blur(1px);
-      }
-      100% {
-        transform: scale(1) rotate(var(--angle));
-        opacity: 1;
-        filter: blur(0);
-        border-radius: inherit;
-      }
-    }
-
-    /* ✦ STARLIGHT CORE — delicate star-burst / gem */
-    .starlight-core {
-      position: absolute;
-      width: 28%;
-      height: 28%;
-      top: 36%;
-      left: 36%;
-      z-index: 22;
-      background: radial-gradient(circle at 35% 35%, 
-        #FFECB3, 
-        #FDBC5A 30%,
-        #E5892A 75%,
-        #C45D18);
-      border-radius: 40% 60% 45% 55% / 55% 40% 60% 45%;
-      box-shadow: 0 0 28px rgba(255, 190, 70, 0.9), 0 0 38px rgba(255, 130, 50, 0.5), inset 0 2px 10px rgba(255, 245, 180, 0.8);
-      animation: centerReveal 2s ease-out forwards, gentleSpin 6s infinite alternate, softPulseGlow 2.6s ease-in-out infinite;
+      width: 85vw;
+      height: 85vw;
+      max-width: 360px;
+      max-height: 360px;
+      border-radius: 50%;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
       cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: clamp(18px, 8vw, 32px);
-      backdrop-filter: blur(1px);
-      transform: scale(0);
-      opacity: 0;
+      transition: transform 0.2s ease;
     }
-    
-    /* center reveals after petals start opening */
-    @keyframes centerReveal {
-      0% {
-        transform: scale(0) rotate(-15deg);
-        opacity: 0;
-      }
-      60% {
-        transform: scale(0.6) rotate(2deg);
-        opacity: 0.6;
-      }
-      100% {
-        transform: scale(1) rotate(0deg);
-        opacity: 1;
-      }
-    }
-    
-    /* inner spark ✨ */
-    .starlight-core::before {
-      content: "✨";
-      position: absolute;
-      font-size: 18px;
-      top: -15%;
-      right: -12%;
-      opacity: 0.9;
-      filter: drop-shadow(0 0 4px gold);
-      animation: littleSpark 2s infinite alternate;
-      pointer-events: none;
-    }
-    
-    .starlight-core::after {
-      content: "💫";
-      position: absolute;
-      font-size: 14px;
-      bottom: -18%;
-      left: -10%;
-      opacity: 0.8;
-      animation: littleSparkRev 2.4s infinite alternate;
-      pointer-events: none;
-    }
-    
-    @keyframes gentleSpin {
-      0% { transform: rotate(0deg) scale(1); border-radius: 40% 60% 45% 55% / 55% 40% 60% 45%; }
-      100% { transform: rotate(8deg) scale(1.02); border-radius: 50% 50% 45% 55% / 50% 45% 55% 50%; }
-    }
-    
-    @keyframes softPulseGlow {
-      0%, 100% { box-shadow: 0 0 20px #FFC285, 0 0 30px rgba(255, 150, 60, 0.6); }
-      50% { box-shadow: 0 0 38px #FFDA90, 0 0 48px #FFB347; }
-    }
-    
-    @keyframes littleSpark {
-      0% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-      100% { transform: translateY(-5px) rotate(10deg); opacity: 1; }
-    }
-    @keyframes littleSparkRev {
-      0% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
-      100% { transform: translateY(4px) rotate(-8deg); opacity: 1; }
+    canvas:active {
+      transform: scale(0.98);
     }
 
-    /* heey text — super friendly and prominent */
     .hey-message {
       text-align: center;
-      margin-top: 26px;
+      margin-top: 24px;
       z-index: 12;
       width: 100%;
-      animation: messageFadeIn 1.8s ease-out forwards;
+      animation: messageFadeIn 1.4s ease-out forwards;
     }
     @keyframes messageFadeIn {
       0% { opacity: 0; transform: translateY(20px); }
@@ -310,7 +145,6 @@
       100% { text-shadow: 0 0 18px rgba(255, 150, 100, 0.9); letter-spacing: 3px; }
     }
     
-    /* interactive ripples (soft, mobile optimized) */
     .touch-ripple {
       position: fixed;
       border-radius: 50%;
@@ -325,7 +159,6 @@
       100% { transform: scale(3.5); opacity: 0; }
     }
     
-    /* mini petal burst */
     .micro-bloom {
       position: fixed;
       pointer-events: none;
@@ -333,29 +166,13 @@
       filter: blur(0.4px);
     }
     
-    /* mobile first adjustments */
     @media (max-width: 550px) {
-      body {
-        padding: 12px;
-      }
-      .flower-stage {
-        width: 82vw;
-        max-width: 300px;
-        height: 82vw;
-        max-height: 300px;
-      }
-      .starlight-core {
-        font-size: 24px;
-      }
-      .hey-big {
-        letter-spacing: 2px;
-      }
-      .sweet-sub {
-        font-size: 0.7rem;
-      }
+      body { padding: 12px; }
+      canvas { width: 82vw; height: 82vw; max-width: 300px; max-height: 300px; }
+      .hey-big { letter-spacing: 2px; }
+      .sweet-sub { font-size: 0.7rem; }
     }
     
-    /* extra little love note */
     .tiny-grace {
       position: absolute;
       bottom: 12px;
@@ -373,22 +190,6 @@
       0% { opacity: 0; transform: translateY(10px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-    
-    /* no awkward outlines on touch */
-    :focus {
-      outline: none;
-    }
-    
-    /* additional floating petal animation for realism - subtle sway after bloom */
-    @keyframes subtleSway {
-      0%, 100% { transform: rotate(var(--angle)) translateY(0px); }
-      50% { transform: rotate(calc(var(--angle) + 0.8deg)) translateY(-1.5px); }
-    }
-    
-    .flower.bloom-complete .petal {
-      animation: realBloom 2.2s cubic-bezier(0.2, 0.85, 0.25, 1.1) forwards, subtleSway 4s ease-in-out infinite;
-      animation-delay: 0s, 2.3s;
-    }
   </style>
 </head>
 <body>
@@ -396,126 +197,437 @@
 <div class="dust-sky" id="dustField"></div>
 
 <div class="sweet-container">
-  <div class="flower-stage">
-    <div class="flower" id="luxuryFlower"></div>
-  </div>
+  <canvas id="flowerCanvas" width="600" height="600"></canvas>
   <div class="hey-message">
     <div class="hey-big">heey MONTAAAA🌸</div>
     <div class="sweet-sub">you make everything bloom</div>
   </div>
-  <div class="tiny-grace">✦ tap the flower center ✦</div>
+  <div class="tiny-grace">✦ tap the flower ✦</div>
 </div>
 
 <script>
-  (function initRealFlower() {
-    // 🌹 REALISTIC FLOWER GENERATOR (layered + organic)
-const layers = [
-  { count: 6, radius: 10, scale: 0.6, delay: 0 },     // inner
-  { count: 8, radius: 18, scale: 0.8, delay: 0.2 },   // mid
-  { count: 10, radius: 26, scale: 1, delay: 0.4 }     // outer
-];
-
-let petalIndex = 0;
-
-layers.forEach((layer, layerIndex) => {
-  for (let i = 0; i < layer.count; i++) {
-
-    const petal = document.createElement("div");
-    petal.className = "petal";
-
-    // 🌪 NOT perfect angle (adds realism)
-    const baseAngle = (360 / layer.count) * i;
-    const randomOffset = (Math.random() - 0.5) * 15;
-    const angle = baseAngle + randomOffset + (layerIndex * 10);
-
-    petal.style.setProperty('--angle', angle + 'deg');
-
-    // 📏 radial positioning (NOT same center)
-    const radius = layer.radius + (Math.random() * 4);
-
-    petal.style.top = `calc(50% - ${radius}px)`;
-    petal.style.left = `calc(50% - ${radius}px)`;
-
-    // 🌸 scale per layer (depth)
-    petal.style.transform = `scale(${layer.scale})`;
-
-    // ⏱ stagger bloom (layered opening)
-    const delay = (petalIndex * 0.08) + layer.delay;
-    petal.style.animationDelay = delay + "s";
-
-    // 🌿 slight organic variation
-    if (Math.random() > 0.7) {
-      petal.style.filter = "brightness(1.1)";
-    }
-
-    flowerContainer.appendChild(petal);
-    petalIndex++;
-  }
-});
+  (function mathematicalFlower() {
+    const canvas = document.getElementById('flowerCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = 600, height = 600;
+    let animationProgress = 0; // 0 to 1 bloom progression
+    let animationStart = null;
+    let timeOffset = 0;
+    let centerGlowIntensity = 0;
     
-    // create petals with realistic bloom animation
-    const petalCount = 16;
-    
-    for (let i = 0; i < petalCount; i++) {
-      const petal = document.createElement("div");
-      petal.className = "petal";
-      
-      const angleStep = 360 / petalCount;
-      const angle = angleStep * i;
-      petal.style.setProperty('--angle', angle + 'deg');
-      
-      // positioning: all petals radiate from center
-      petal.style.top = "24%";
-      petal.style.left = "24%";
-      
-      // staggered bloom timing for realistic sequential opening (like a real flower unfurling)
-      // petals bloom in order, creating a wave effect
-      const delay = i * 0.095;
-      petal.style.animationDelay = delay + "s";
-      
-      // some petals get extra gentle variation for organic look
-      if (i % 5 === 2) {
-        petal.style.width = "49%";
-        petal.style.height = "53%";
-      }
-      if (i % 7 === 3) {
-        petal.style.background = `radial-gradient(ellipse at 30% 30%, #FFBFCB, #FF7AA5, #D9426C)`;
-      }
-      
-      flowerContainer.appendChild(petal);
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const size = rect.width;
+      canvas.width = size;
+      canvas.height = size;
+      width = size;
+      height = size;
+      draw();
     }
     
-    // create gorgeous starlight core with delayed reveal (like a flower's center emerging)
-    const starCore = document.createElement("div");
-    starCore.className = "starlight-core";
-    starCore.innerHTML = "🌸";
-    starCore.style.animationDelay = "0.8s"; // center appears after petals start opening
-    flowerContainer.appendChild(starCore);
+    window.addEventListener('resize', () => { resizeCanvas(); draw(); });
     
-    // mark flower as bloom-complete after main animation finishes to add subtle sway
-    setTimeout(() => {
-      flowerContainer.classList.add('bloom-complete');
-    }, 2400);
+    // mathematical parameters for a exquisite rose/flower
+    // using parametric equations: r(θ) = a + b * cos(nθ) with petal modulation
     
-    // === INTERACTIVITY : tap on core gives "heey" magic ===
-    starCore.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const rect = starCore.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
+    function petalRadius(theta, petalCount, bloomFactor) {
+      // bloomFactor: 0 = closed bud, 1 = fully open
+      const a = 0.38;           // base radius (normalized)
+      const b = 0.28;          // petal amplitude
+      const n = petalCount / 2; // frequency
+      // add twist and wave for realism
+      const twist = Math.sin(theta * 3) * 0.03 * bloomFactor;
+      const rBase = a + b * Math.cos(n * theta) + twist;
+      // additional smaller harmonics for texture
+      const rFine = Math.sin(theta * 12) * 0.02 * bloomFactor;
+      let r = rBase + rFine;
+      // bloom openness: petals expand outward as bloom progresses
+      r = r * (0.65 + bloomFactor * 0.45);
+      // add slight asymmetry for organic feel
+      r = r * (1 + Math.sin(theta * 5) * 0.01);
+      return Math.min(0.92, Math.max(0.08, r));
+    }
+    
+    // inner spiral core (mathematical golden ratio spiral)
+    function drawCenter(ctx, cx, cy, size, bloomFactor, time) {
+      const maxRadius = size * 0.18 * (0.7 + bloomFactor * 0.5);
+      const pulse = 0.95 + Math.sin(time * 8) * 0.03;
       
-      // visual & emotional feedback
+      // golden spiral dots
+      const spirals = 180;
+      for (let i = 0; i < spirals; i++) {
+        const t = i / spirals; // 0..1
+        const angle = t * Math.PI * 8; // multiple rotations
+        const r = maxRadius * Math.pow(t, 0.85) * (0.6 + bloomFactor * 0.5);
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, r * 0.8);
+        gradient.addColorStop(0, `rgba(255, 225, 140, ${0.8 + Math.sin(angle * 5) * 0.2})`);
+        gradient.addColorStop(1, `rgba(210, 120, 40, 0.7)`);
+        ctx.beginPath();
+        ctx.arc(x, y, r * 0.12 * (0.5 + t * 0.8), 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+      }
+      
+      // center gem
+      const centerGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxRadius * 0.7);
+      centerGrad.addColorStop(0, '#FFE8B0');
+      centerGrad.addColorStop(0.5, '#FDBC5A');
+      centerGrad.addColorStop(1, '#C45D18');
+      ctx.beginPath();
+      ctx.arc(cx, cy, maxRadius * 0.55 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = centerGrad;
+      ctx.fill();
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = '#FFB347';
+      
+      // tiny sparkle dots
+      for (let i = 0; i < 24; i++) {
+        const ang = (i / 24) * Math.PI * 2 + time;
+        const rad = maxRadius * 0.7;
+        const x = cx + Math.cos(ang) * rad;
+        const y = cy + Math.sin(ang) * rad;
+        ctx.beginPath();
+        ctx.arc(x, y, maxRadius * 0.07, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 210, 100, ${0.6 + Math.sin(time * 12 + i) * 0.3})`;
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+    }
+    
+    // draw a single petal using parametric curves
+    function drawPetal(ctx, cx, cy, angle, rInner, rOuter, bloomFactor, index, totalPetals, time) {
+      const petalAngle = angle;
+      const tipAngle = angle;
+      
+      // petal shape based on superellipse + bezier
+      const petalLength = rOuter * (0.85 + bloomFactor * 0.2);
+      const petalWidth = rOuter * 0.48 * (0.7 + Math.sin(angle * 3) * 0.1);
+      
+      // dynamic offset for organic wave
+      const waveX = Math.sin(angle * 5 + time) * 2 * bloomFactor;
+      const waveY = Math.cos(angle * 4 + time * 1.3) * 1.5 * bloomFactor;
+      
+      const tipX = cx + Math.cos(tipAngle) * petalLength + waveX;
+      const tipY = cy + Math.sin(tipAngle) * petalLength + waveY;
+      
+      // left and right control points
+      const perpAngle = angle + Math.PI / 2;
+      const leftCtrlX = cx + Math.cos(angle) * (petalLength * 0.5) + Math.cos(perpAngle) * petalWidth + waveX * 0.5;
+      const leftCtrlY = cy + Math.sin(angle) * (petalLength * 0.5) + Math.sin(perpAngle) * petalWidth + waveY * 0.5;
+      const rightCtrlX = cx + Math.cos(angle) * (petalLength * 0.5) - Math.cos(perpAngle) * petalWidth + waveX * 0.5;
+      const rightCtrlY = cy + Math.sin(angle) * (petalLength * 0.5) - Math.sin(perpAngle) * petalWidth + waveY * 0.5;
+      
+      // base of petal (inner)
+      const baseX = cx + Math.cos(angle) * rInner * 0.9;
+      const baseY = cy + Math.sin(angle) * rInner * 0.9;
+      
+      ctx.beginPath();
+      ctx.moveTo(baseX, baseY);
+      ctx.quadraticCurveTo(leftCtrlX, leftCtrlY, tipX, tipY);
+      ctx.quadraticCurveTo(rightCtrlX, rightCtrlY, baseX, baseY);
+      ctx.closePath();
+      
+      // gradient fill: rich pink/red with bloom intensity
+      const grad = ctx.createLinearGradient(baseX, baseY, tipX, tipY);
+      const intensity = 0.5 + bloomFactor * 0.5;
+      const rColor = 255 - Math.floor(60 * (1 - bloomFactor));
+      const gColor = 120 + Math.floor(70 * bloomFactor);
+      const bColor = 100 + Math.floor(60 * bloomFactor);
+      grad.addColorStop(0, `rgba(255, ${120 + 40 * bloomFactor}, ${130 + 30 * bloomFactor}, 1)`);
+      grad.addColorStop(0.6, `rgba(220, 60, 90, 1)`);
+      grad.addColorStop(1, `rgba(160, 30, 65, 1)`);
+      
+      ctx.fillStyle = grad;
+      ctx.fill();
+      
+      // add subtle vein lines (mathematical)
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.beginPath();
+      ctx.moveTo(baseX, baseY);
+      const midX = cx + Math.cos(angle) * (petalLength * 0.6);
+      const midY = cy + Math.sin(angle) * (petalLength * 0.6);
+      ctx.lineTo(midX, midY);
+      ctx.lineTo(tipX, tipY);
+      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = `rgba(255, 200, 150, ${0.2 + bloomFactor * 0.3})`;
+      ctx.stroke();
+      ctx.restore();
+      
+      // edge highlight shimmer
+      ctx.shadowBlur = 4;
+      ctx.shadowColor = `rgba(255, 120, 100, ${0.3 * bloomFactor})`;
+      ctx.strokeStyle = `rgba(255, 200, 170, 0.25)`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+    
+    // draw outer decorative filaments (stamen-like)
+    function drawFilaments(ctx, cx, cy, maxR, bloomFactor, time, petalCount) {
+      const filamentCount = 32;
+      for (let i = 0; i < filamentCount; i++) {
+        const angle = (i / filamentCount) * Math.PI * 2 + time * 0.5;
+        const rBase = maxR * (0.55 + bloomFactor * 0.15);
+        const rTip = maxR * (0.95 + Math.sin(angle * 5) * 0.05);
+        const x1 = cx + Math.cos(angle) * rBase;
+        const y1 = cy + Math.sin(angle) * rBase;
+        const x2 = cx + Math.cos(angle + 0.08) * rTip;
+        const y2 = cy + Math.sin(angle + 0.08) * rTip;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = `rgba(255, 180, 100, ${0.25 + Math.sin(angle * 8 + time) * 0.1})`;
+        ctx.stroke();
+        
+        // tiny dot at tip
+        ctx.beginPath();
+        ctx.arc(x2, y2, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 210, 90, 0.7)`;
+        ctx.fill();
+      }
+    }
+    
+    let frame = 0;
+    let bloomStart = null;
+    let isBlooming = true;
+    
+    function animateBloom(timestamp) {
+      if (!bloomStart) bloomStart = timestamp;
+      const elapsed = (timestamp - bloomStart) / 1000;
+      if (isBlooming) {
+        animationProgress = Math.min(1, elapsed / 1.8); // 1.8 sec full bloom
+        if (animationProgress >= 1) isBlooming = false;
+      }
+      timeOffset = timestamp / 380;
+      centerGlowIntensity = 0.5 + Math.sin(timestamp / 400) * 0.2;
+      draw();
+      requestAnimationFrame(animateBloom);
+    }
+    
+    function draw() {
+      if (!ctx) return;
+      const size = width;
+      const cx = size / 2;
+      const cy = size / 2;
+      const maxRadius = size * 0.42;
+      
+      ctx.clearRect(0, 0, size, size);
+      
+      // background glow inside canvas
+      const radialGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxRadius * 1.2);
+      radialGrad.addColorStop(0, `rgba(40, 18, 35, 0.3)`);
+      radialGrad.addColorStop(1, `rgba(10, 5, 15, 0.9)`);
+      ctx.fillStyle = radialGrad;
+      ctx.fillRect(0, 0, size, size);
+      
+      const petalCount = 18; // mathematical golden angle relation
+      
+      // draw petals from back to front (two layers for depth)
+      // back layer (slightly darker, offset)
+      for (let i = 0; i < petalCount; i++) {
+        const angle = (i / petalCount) * Math.PI * 2 + 0.12;
+        const rInner = maxRadius * 0.22;
+        const rOuter = maxRadius * petalRadius(angle, petalCount, animationProgress);
+        ctx.save();
+        drawPetal(ctx, cx, cy, angle, rInner, rOuter, animationProgress * 0.9, i, petalCount, timeOffset);
+        ctx.restore();
+      }
+      
+      // main petal layer
+      for (let i = 0; i < petalCount; i++) {
+        const angle = (i / petalCount) * Math.PI * 2;
+        const rInner = maxRadius * 0.2;
+        const rOuter = maxRadius * petalRadius(angle, petalCount, animationProgress);
+        ctx.save();
+        drawPetal(ctx, cx, cy, angle, rInner, rOuter, animationProgress, i, petalCount, timeOffset);
+        ctx.restore();
+      }
+      
+      // additional in-between petals for lushness (math: interpolated angles)
+      const interCount = 12;
+      for (let i = 0; i < interCount; i++) {
+        const angle = (i / interCount) * Math.PI * 2 + Math.PI / petalCount;
+        const rInner = maxRadius * 0.21;
+        let rOuter = maxRadius * (0.68 + Math.cos(angle * 6) * 0.08) * (0.7 + animationProgress * 0.45);
+        rOuter = Math.min(maxRadius * 0.88, rOuter);
+        ctx.save();
+        drawPetal(ctx, cx, cy, angle, rInner, rOuter, animationProgress * 0.85, i, interCount, timeOffset);
+        ctx.restore();
+      }
+      
+      // draw delicate stamens/filaments
+      drawFilaments(ctx, cx, cy, maxRadius * 0.78, animationProgress, timeOffset, petalCount);
+      
+      // magical center spiral + golden ratio core
+      drawCenter(ctx, cx, cy, maxRadius * 0.7, animationProgress, timeOffset);
+      
+      // add petal tip sparkles (floating particles)
+      for (let i = 0; i < 40; i++) {
+        const angleSpark = (i * 37.5) * Math.PI / 180 + timeOffset * 2;
+        const rSpark = maxRadius * (0.82 + Math.sin(angleSpark * 5) * 0.08);
+        const xSpark = cx + Math.cos(angleSpark) * rSpark;
+        const ySpark = cy + Math.sin(angleSpark) * rSpark;
+        ctx.beginPath();
+        ctx.arc(xSpark, ySpark, 1.2 + Math.sin(timeOffset * 10 + i) * 0.6, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 190, 100, ${0.4 + Math.sin(timeOffset * 12 + i) * 0.2})`;
+        ctx.fill();
+      }
+      
+      // overall bloom glow effect
+      ctx.shadowBlur = 0;
+      ctx.globalCompositeOperation = 'source-over';
+      const glowAmount = 0.25 + animationProgress * 0.3;
+      ctx.beginPath();
+      ctx.arc(cx, cy, maxRadius * 0.65, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 130, 100, ${glowAmount * 0.12})`;
+      ctx.fill();
+    }
+    
+    // floating heey text and interactive magic on tap
+    function createRippleTouch(x, y, color = "#FFD4A5") {
+      const rippleDiv = document.createElement("div");
+      rippleDiv.className = "touch-ripple";
+      rippleDiv.style.left = x - 25 + "px";
+      rippleDiv.style.top = y - 25 + "px";
+      rippleDiv.style.width = "50px";
+      rippleDiv.style.height = "50px";
+      rippleDiv.style.background = `radial-gradient(circle, ${color} 0%, rgba(255,130,90,0) 75%)`;
+      document.body.appendChild(rippleDiv);
+      setTimeout(() => { if (rippleDiv && rippleDiv.remove) rippleDiv.remove(); }, 700);
+    }
+    
+    function burstHeartsAndStars(x, y) {
+      const icons = ["❤️", "🌸", "✨", "💖", "🌼", "🌺", "⭐"];
+      for (let i = 0; i < 24; i++) {
+        const charm = document.createElement("div");
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        charm.innerHTML = randomIcon;
+        charm.style.position = "fixed";
+        charm.style.left = x + "px";
+        charm.style.top = y + "px";
+        charm.style.fontSize = (12 + Math.random() * 16) + "px";
+        charm.style.pointerEvents = "none";
+        charm.style.zIndex = "210";
+        charm.style.opacity = "0.9";
+        charm.style.filter = "drop-shadow(0 0 3px #FFBC8C)";
+        document.body.appendChild(charm);
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1.8 + Math.random() * 6.5;
+        let vx = Math.cos(angle) * speed;
+        let vy = Math.sin(angle) * speed - 1.5;
+        let posX = x, posY = y;
+        let life = 1.0;
+        let rot = Math.random() * 360;
+        function flyCharm() {
+          if (life <= 0.02 || posY < -60 || posX > window.innerWidth + 100 || posX < -100) {
+            if (charm.parentNode) charm.remove();
+            return;
+          }
+          posX += vx;
+          posY += vy;
+          vy += 0.1;
+          life -= 0.017;
+          rot += 8;
+          charm.style.transform = `translate(${posX - x}px, ${posY - y}px) rotate(${rot}deg)`;
+          charm.style.opacity = life * 0.9;
+          requestAnimationFrame(flyCharm);
+        }
+        requestAnimationFrame(flyCharm);
+        setTimeout(() => { if (charm.parentNode) charm.remove(); }, 1600);
+      }
+    }
+    
+    function floatingHeeyText(x, y) {
+      const wordDiv = document.createElement("div");
+      const greetings = ["heey ✨", "💕 MONTAAAA!", "sweet you", "🌸 lovely", "heey 💖"];
+      wordDiv.innerText = greetings[Math.floor(Math.random() * greetings.length)];
+      wordDiv.style.position = "fixed";
+      wordDiv.style.left = x + "px";
+      wordDiv.style.top = y + "px";
+      wordDiv.style.fontSize = "1.5rem";
+      wordDiv.style.fontWeight = "bold";
+      wordDiv.style.fontFamily = "'Segoe UI', 'Poppins', cursive";
+      wordDiv.style.background = "linear-gradient(125deg, #FFE2BC, #FFBACB)";
+      wordDiv.style.webkitBackgroundClip = "text";
+      wordDiv.style.backgroundClip = "text";
+      wordDiv.style.color = "transparent";
+      wordDiv.style.whiteSpace = "nowrap";
+      wordDiv.style.pointerEvents = "none";
+      wordDiv.style.zIndex = "250";
+      wordDiv.style.textShadow = "0 0 12px #FFB080";
+      document.body.appendChild(wordDiv);
+      let offsetY = 0;
+      let opacityVal = 1;
+      function riseSweet() {
+        offsetY -= 1.8;
+        opacityVal -= 0.018;
+        if (opacityVal <= 0) {
+          if (wordDiv.parentNode) wordDiv.remove();
+          return;
+        }
+        wordDiv.style.transform = `translate(${0}px, ${offsetY}px) scale(${1 + offsetY * 0.008})`;
+        wordDiv.style.opacity = opacityVal;
+        requestAnimationFrame(riseSweet);
+      }
+      requestAnimationFrame(riseSweet);
+      setTimeout(() => { if (wordDiv.parentNode) wordDiv.remove(); }, 1200);
+    }
+    
+    function miniPetalSprinkle(x, y) {
+      for (let i = 0; i < 14; i++) {
+        const petalPiece = document.createElement("div");
+        petalPiece.className = "micro-bloom";
+        petalPiece.style.width = "9px";
+        petalPiece.style.height = "11px";
+        petalPiece.style.background = `radial-gradient(circle, #FFAABA, #F8557F)`;
+        petalPiece.style.borderRadius = "70% 30% 60% 40% / 55% 45% 55% 45%";
+        petalPiece.style.left = x + "px";
+        petalPiece.style.top = y + "px";
+        petalPiece.style.boxShadow = "0 0 5px #FFA57A";
+        document.body.appendChild(petalPiece);
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 1.4 + Math.random() * 5;
+        let dx = Math.cos(angle) * velocity;
+        let dy = Math.sin(angle) * velocity - 1.2;
+        let posX = 0, posY = 0;
+        let life = 1;
+        let rotSpiral = Math.random() * 25;
+        function flyPiece() {
+          posX += dx;
+          posY += dy;
+          dy += 0.1;
+          life -= 0.023;
+          if (life <= 0 || posY > 280 || Math.abs(posX) > 260) {
+            if (petalPiece.parentNode) petalPiece.remove();
+            return;
+          }
+          petalPiece.style.transform = `translate(${posX}px, ${posY}px) rotate(${rotSpiral + posX}deg)`;
+          petalPiece.style.opacity = life * 0.8;
+          requestAnimationFrame(flyPiece);
+        }
+        requestAnimationFrame(flyPiece);
+        setTimeout(() => { if (petalPiece.parentNode) petalPiece.remove(); }, 1000);
+      }
+    }
+    
+    // canvas click interaction
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const canvasX = (e.clientX - rect.left) * scaleX;
+      const canvasY = (e.clientY - rect.top) * scaleY;
+      const centerX = e.clientX;
+      const centerY = e.clientY;
       createRippleTouch(centerX, centerY, "#FFCFA5");
       burstHeartsAndStars(centerX, centerY);
       floatingHeeyText(centerX, centerY);
+      miniPetalSprinkle(centerX, centerY);
       
-      // animate the core for playful response
-      starCore.style.transform = "scale(0.94) rotate(2deg)";
-      setTimeout(() => {
-        starCore.style.transform = "";
-      }, 150);
-      
-      // animate "heey" text with extra sweetness
       const heyBig = document.querySelector(".hey-big");
       heyBig.style.animation = "none";
       heyBig.style.transform = "scale(1.1)";
@@ -523,296 +635,55 @@ layers.forEach((layer, layerIndex) => {
         heyBig.style.animation = "textPop 2s infinite alternate";
         heyBig.style.transform = "";
       }, 220);
-      
-      // subtle subtext change
       const subElem = document.querySelector(".sweet-sub");
       const originalSub = subElem.innerText;
       subElem.innerText = "💕  heey gorgeous  💕";
-      subElem.style.opacity = "0.95";
-      setTimeout(() => {
-        subElem.innerText = originalSub;
-      }, 1200);
-      
-      // extra fun: trigger a tiny confetti of petals
-      miniPetalSprinkle(centerX, centerY);
+      setTimeout(() => { subElem.innerText = originalSub; }, 1200);
     });
     
-    // also clicking flower wrapper (but not center twice) gives subtle delight
-    const wrapper = document.querySelector(".flower-stage");
-    wrapper.addEventListener("click", (e) => {
-      if (e.target === starCore || starCore.contains(e.target)) return;
-      const clickX = e.clientX;
-      const clickY = e.clientY;
-      createRippleTouch(clickX, clickY, "#FFCBA5");
-      softPetalShower(clickX, clickY);
-    });
+    function initDustField() {
+      const dustContainer = document.getElementById("dustField");
+      if (!dustContainer) return;
+      const dustCount = 55;
+      for (let i = 0; i < dustCount; i++) {
+        const dust = document.createElement("div");
+        dust.classList.add("dustie");
+        const size = 2 + Math.random() * 5;
+        dust.style.width = size + "px";
+        dust.style.height = size + "px";
+        dust.style.left = Math.random() * 100 + "%";
+        dust.style.animationDuration = 4 + Math.random() * 15 + "s";
+        dust.style.animationDelay = Math.random() * 12 + "s";
+        dust.style.opacity = 0.2 + Math.random() * 0.45;
+        dust.style.background = `radial-gradient(circle, #FFCFB5, #FFA7B8)`;
+        dustContainer.appendChild(dust);
+      }
+      setInterval(() => {
+        if (document.hidden) return;
+        const driftHeart = document.createElement("div");
+        driftHeart.innerHTML = "✧";
+        driftHeart.style.position = "fixed";
+        driftHeart.style.left = Math.random() * 100 + "%";
+        driftHeart.style.bottom = "-15px";
+        driftHeart.style.fontSize = "12px";
+        driftHeart.style.color = `rgba(255, 190, 165, 0.5)`;
+        driftHeart.style.pointerEvents = "none";
+        driftHeart.style.zIndex = "3";
+        driftHeart.style.animation = `floatGentle 10s linear forwards`;
+        driftHeart.style.opacity = "0.5";
+        document.body.appendChild(driftHeart);
+        setTimeout(() => driftHeart.remove(), 10000);
+      }, 3400);
+    }
     
-    // ADDITIONAL REALISM: create a few inner petals that appear slightly later (optional)
-    // this gives the feeling of a multi-layered flower opening
-    setTimeout(() => {
-      const innerPetals = [3, 8, 12];
-      innerPetals.forEach(idx => {
-        const existingPetals = document.querySelectorAll('.petal');
-        if (existingPetals[idx]) {
-          existingPetals[idx].style.filter = "brightness(1.08) drop-shadow(0 0 4px #FFC0CB)";
-        }
-      });
-    }, 1000);
+    const styleFloat = document.createElement('style');
+    styleFloat.textContent = `@keyframes floatGentle { 0% { transform: translateY(0) rotate(0deg); opacity: 0.3; } 100% { transform: translateY(-100vh) rotate(12deg); opacity: 0; } }`;
+    document.head.appendChild(styleFloat);
     
-  })();
-  
-  // ripple effect for mobile (clean)
-  function createRippleTouch(x, y, color = "#FFD4A5") {
-    const rippleDiv = document.createElement("div");
-    rippleDiv.className = "touch-ripple";
-    rippleDiv.style.left = x - 25 + "px";
-    rippleDiv.style.top = y - 25 + "px";
-    rippleDiv.style.width = "50px";
-    rippleDiv.style.height = "50px";
-    rippleDiv.style.background = `radial-gradient(circle, ${color} 0%, rgba(255,130,90,0) 75%)`;
-    document.body.appendChild(rippleDiv);
-    setTimeout(() => {
-      if (rippleDiv && rippleDiv.remove) rippleDiv.remove();
-    }, 700);
-  }
-  
-  // magical heart & star burst (heey celebration)
-  function burstHeartsAndStars(x, y) {
-    const icons = ["❤️", "🌸", "✨", "💖", "🌼", "🌺", "⭐"];
-    for (let i = 0; i < 22; i++) {
-      const charm = document.createElement("div");
-      const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-      charm.innerHTML = randomIcon;
-      charm.style.position = "fixed";
-      charm.style.left = x + "px";
-      charm.style.top = y + "px";
-      charm.style.fontSize = (12 + Math.random() * 16) + "px";
-      charm.style.pointerEvents = "none";
-      charm.style.zIndex = "210";
-      charm.style.opacity = "0.9";
-      charm.style.filter = "drop-shadow(0 0 3px #FFBC8C)";
-      document.body.appendChild(charm);
-      
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 1.8 + Math.random() * 6.5;
-      let vx = Math.cos(angle) * speed;
-      let vy = Math.sin(angle) * speed - 1.5;
-      let posX = x, posY = y;
-      let life = 1.0;
-      let rot = Math.random() * 360;
-      
-      function flyCharm() {
-        if (life <= 0.02 || posY < -60 || posX > window.innerWidth + 100 || posX < -100) {
-          if (charm.parentNode) charm.remove();
-          return;
-        }
-        posX += vx;
-        posY += vy;
-        vy += 0.1;
-        life -= 0.017;
-        rot += 8;
-        charm.style.transform = `translate(${posX - x}px, ${posY - y}px) rotate(${rot}deg)`;
-        charm.style.opacity = life * 0.9;
-        requestAnimationFrame(flyCharm);
-      }
-      requestAnimationFrame(flyCharm);
-      setTimeout(() => {
-        if (charm.parentNode) charm.remove();
-      }, 1600);
-    }
-  }
-  
-  // floating "heey" word popup sweet
-  function floatingHeeyText(x, y) {
-    const wordDiv = document.createElement("div");
-    const greetings = ["heey ✨", "💕 hey!", "sweet you", "🌸 lovely", "heey 💖"];
-    wordDiv.innerText = greetings[Math.floor(Math.random() * greetings.length)];
-    wordDiv.style.position = "fixed";
-    wordDiv.style.left = x + "px";
-    wordDiv.style.top = y + "px";
-    wordDiv.style.fontSize = "1.5rem";
-    wordDiv.style.fontWeight = "bold";
-    wordDiv.style.fontFamily = "'Segoe UI', 'Poppins', cursive";
-    wordDiv.style.background = "linear-gradient(125deg, #FFE2BC, #FFBACB)";
-    wordDiv.style.webkitBackgroundClip = "text";
-    wordDiv.style.backgroundClip = "text";
-    wordDiv.style.color = "transparent";
-    wordDiv.style.whiteSpace = "nowrap";
-    wordDiv.style.pointerEvents = "none";
-    wordDiv.style.zIndex = "250";
-    wordDiv.style.textShadow = "0 0 12px #FFB080";
-    wordDiv.style.backdropFilter = "blur(2px)";
-    document.body.appendChild(wordDiv);
-    
-    let offsetY = 0;
-    let opacityVal = 1;
-    function riseSweet() {
-      offsetY -= 1.8;
-      opacityVal -= 0.018;
-      if (opacityVal <= 0) {
-        if (wordDiv.parentNode) wordDiv.remove();
-        return;
-      }
-      wordDiv.style.transform = `translate(${0}px, ${offsetY}px) scale(${1 + offsetY * 0.008})`;
-      wordDiv.style.opacity = opacityVal;
-      requestAnimationFrame(riseSweet);
-    }
-    requestAnimationFrame(riseSweet);
-    setTimeout(() => {
-      if (wordDiv.parentNode) wordDiv.remove();
-    }, 1200);
-  }
-  
-  // mini petal sprinkle (from the core burst)
-  function miniPetalSprinkle(x, y) {
-    for (let i = 0; i < 14; i++) {
-      const petalPiece = document.createElement("div");
-      petalPiece.className = "micro-bloom";
-      petalPiece.style.width = "9px";
-      petalPiece.style.height = "11px";
-      petalPiece.style.background = `radial-gradient(circle, #FFAABA, #F8557F)`;
-      petalPiece.style.borderRadius = "70% 30% 60% 40% / 55% 45% 55% 45%";
-      petalPiece.style.left = x + "px";
-      petalPiece.style.top = y + "px";
-      petalPiece.style.boxShadow = "0 0 5px #FFA57A";
-      document.body.appendChild(petalPiece);
-      
-      const angle = Math.random() * Math.PI * 2;
-      const velocity = 1.4 + Math.random() * 5;
-      let dx = Math.cos(angle) * velocity;
-      let dy = Math.sin(angle) * velocity - 1.2;
-      let posX = 0, posY = 0;
-      let life = 1;
-      let rotSpiral = Math.random() * 25;
-      
-      function flyPiece() {
-        posX += dx;
-        posY += dy;
-        dy += 0.1;
-        life -= 0.023;
-        if (life <= 0 || posY > 280 || Math.abs(posX) > 260) {
-          if (petalPiece.parentNode) petalPiece.remove();
-          return;
-        }
-        petalPiece.style.transform = `translate(${posX}px, ${posY}px) rotate(${rotSpiral + posX}deg)`;
-        petalPiece.style.opacity = life * 0.8;
-        requestAnimationFrame(flyPiece);
-      }
-      requestAnimationFrame(flyPiece);
-      setTimeout(() => {
-        if (petalPiece.parentNode) petalPiece.remove();
-      }, 1000);
-    }
-  }
-  
-  function softPetalShower(x, y) {
-    for (let i = 0; i < 10; i++) {
-      const leaflet = document.createElement("div");
-      leaflet.className = "micro-bloom";
-      leaflet.style.width = "8px";
-      leaflet.style.height = "10px";
-      leaflet.style.background = `radial-gradient(circle, #FFB5C2, #E65079)`;
-      leaflet.style.borderRadius = "60% 40% 65% 35% / 50% 45% 55% 45%";
-      leaflet.style.left = x + "px";
-      leaflet.style.top = y + "px";
-      document.body.appendChild(leaflet);
-      
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 1.5 + Math.random() * 4.5;
-      let dx = Math.cos(angle) * speed;
-      let dy = Math.sin(angle) * speed - 1;
-      let posX = 0, posY = 0;
-      let life = 1;
-      function moveLeaf() {
-        posX += dx;
-        posY += dy;
-        dy += 0.08;
-        life -= 0.025;
-        if (life <= 0 || Math.abs(posY) > 200) {
-          if (leaflet.parentNode) leaflet.remove();
-          return;
-        }
-        leaflet.style.transform = `translate(${posX}px, ${posY}px) rotate(${posX}deg)`;
-        leaflet.style.opacity = life * 0.7;
-        requestAnimationFrame(moveLeaf);
-      }
-      requestAnimationFrame(moveLeaf);
-      setTimeout(() => leaflet.remove(), 900);
-    }
-  }
-  
-  // floating dust field (mobile friendly)
-  function initDustField() {
-    const dustContainer = document.getElementById("dustField");
-    if (!dustContainer) return;
-    const dustCount = 55;
-    for (let i = 0; i < dustCount; i++) {
-      const dust = document.createElement("div");
-      dust.classList.add("dustie");
-      const size = 2 + Math.random() * 5;
-      dust.style.width = size + "px";
-      dust.style.height = size + "px";
-      dust.style.left = Math.random() * 100 + "%";
-      dust.style.animationDuration = 4 + Math.random() * 15 + "s";
-      dust.style.animationDelay = Math.random() * 12 + "s";
-      dust.style.opacity = 0.2 + Math.random() * 0.45;
-      dust.style.background = `radial-gradient(circle, #FFCFB5, #FFA7B8)`;
-      dustContainer.appendChild(dust);
-    }
-    // gentle floating mini hearts occasionally
-    setInterval(() => {
-      if (document.hidden) return;
-      const driftHeart = document.createElement("div");
-      driftHeart.innerHTML = "✧";
-      driftHeart.style.position = "fixed";
-      driftHeart.style.left = Math.random() * 100 + "%";
-      driftHeart.style.bottom = "-15px";
-      driftHeart.style.fontSize = "12px";
-      driftHeart.style.color = `rgba(255, 190, 165, 0.5)`;
-      driftHeart.style.pointerEvents = "none";
-      driftHeart.style.zIndex = "3";
-      driftHeart.style.animation = `floatGentle 10s linear forwards`;
-      driftHeart.style.opacity = "0.5";
-      document.body.appendChild(driftHeart);
-      setTimeout(() => driftHeart.remove(), 10000);
-    }, 3400);
-  }
-  
-  const styleFloat = document.createElement('style');
-  styleFloat.textContent = `
-    @keyframes floatGentle {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
-      100% { transform: translateY(-100vh) rotate(12deg); opacity: 0; }
-    }
-  `;
-  document.head.appendChild(styleFloat);
-  
-  // random petal shimmer periodically (after bloom)
-  setInterval(() => {
-    const petals = document.querySelectorAll('.petal');
-    if (!petals.length) return;
-    const randomPetal = petals[Math.floor(Math.random() * petals.length)];
-    if (randomPetal) {
-      randomPetal.style.filter = "brightness(1.15) drop-shadow(0 0 5px #FFB28C)";
-      setTimeout(() => {
-        if (randomPetal) randomPetal.style.filter = "";
-      }, 350);
-    }
-  }, 1900);
-  
-  window.addEventListener('load', () => {
+    resizeCanvas();
     initDustField();
-    // welcome touch: tiny heey greeting pop after load, once flower has started blooming
-    setTimeout(() => {
-      const core = document.querySelector('.starlight-core');
-      if (core) {
-        const rect = core.getBoundingClientRect();
-        const x = rect.left + rect.width/2;
-        const y = rect.top + rect.height/2;
-        floatingHeeyText(x, y);
-      }
-    }, 1200);
-  });
+    requestAnimationFrame(animateBloom);
+  })();
 </script>
 </body>
 </html>
